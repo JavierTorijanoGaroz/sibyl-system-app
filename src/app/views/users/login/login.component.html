@@ -1,0 +1,39 @@
+<!-- Login -->
+<header class="masthead">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 my-5 text-center">
+                <div class="container text-center mb-3">
+                    <a [routerLink]="['/home']"><img class="rounded mx-auto d-block logo" src="../../../../assets/img/png/zen-black.png" alt="Oracle-System-Logo"></a>
+                    <h4 class="card-title font-weight-light pt-3">Sign in to Oracle System</h4>
+                </div>
+                <div class="container py-2">
+                    <div class="card">
+                        <article class="card-body">
+                            <form>
+                                <div class="form-group">
+                                    <label>Email address</label>
+                                    <input type="email" class="form-control" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input class="form-control" type="password">
+                                </div>
+                                <hr class="rgba-white-light mx-4 my-3">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-block" [routerLink]="['/dashboard']"> Login </button>
+                                </div>
+                            </form>
+                        </article>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="card">
+                        <p class="m-3">New to Oracle System? <a [routerLink]="['/register']"> Create an account</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Login -->
