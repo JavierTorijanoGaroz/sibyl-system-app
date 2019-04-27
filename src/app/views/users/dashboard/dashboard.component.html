@@ -1,0 +1,84 @@
+<!-- Dashboard -->
+<div class="d-flex" id="wrapper" [class.toggled]="toggledClassApplied">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right shadow" id="sidebar-wrapper">
+        <div class="sidebar-heading text-center">
+            <a class="navbar-brand mx-auto" [routerLink]="['/home']">
+                <img src="../../../../assets/img/png/zen-black.png" class="app-logo" alt="OracleSystemLogo" />
+            </a>
+            <br>
+            <a class="navbar-brand mx-auto text-dark" [routerLink]="['/home']">{{ appTitle }}</a>
+        </div>
+        <div class="list-group list-group-flush">
+            <a [routerLink]="['/dashboard', {outlets: {'user': ['overview']}}]" class="list-group-item list-group-item-action bg-light">Overview</a>
+            <a [routerLink]="['/dashboard', {outlets: {'user': ['users']}}]" class="list-group-item list-group-item-action bg-light">Users</a>
+            <a [routerLink]="['/dashboard', {outlets: {'user': ['patients']}}]" class="list-group-item list-group-item-action bg-light">Patients</a>
+            <a [routerLink]="['/dashboard', {outlets: {'user': ['locations']}}]" class="list-group-item list-group-item-action bg-light">Locations</a>
+            <a [routerLink]="['/dashboard', {outlets: {'user': ['equipment']}}]" class="list-group-item list-group-item-action bg-light">Equipment</a>
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow">
+            <button class="btn btn-dark" id="menu-toggle" (click)="toggledClass()"><i class="fas fa-bars"></i></button>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ userName }}</a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Profile</a>
+                            <a class="dropdown-item" href="#">Settings</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Container -->
+        <div class="container-fluid p-5">
+
+            <h2>Usuarios</h2>
+            <p>Listado de usuarios registrados en el sistema:</p>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                    </tr>
+                    <tr>
+                        <td>Mary</td>
+                        <td>Moe</td>
+                        <td>mary@example.com</td>
+                    </tr>
+                    <tr>
+                        <td>July</td>
+                        <td>Dooley</td>
+                        <td>july@example.com</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <router-outlet name="user"></router-outlet>
+    </div>
+</div>
