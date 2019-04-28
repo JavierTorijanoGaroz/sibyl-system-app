@@ -7,9 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  appTitle: string = "Sibyl System";
-  userName: string = "Nombre de usuario"; // TODO: Recuperar nombre del actual usuario autentificado
-  isAdmin: boolean = false ; // TODO: Recuperar permisos del usuario autentificado
+  title: string = "Sibyl System";
+  userName: string = "Nombre de usuario";
+  isAdmin: boolean = false ;
   toggledClassApplied: boolean = false;
 
   constructor() { }

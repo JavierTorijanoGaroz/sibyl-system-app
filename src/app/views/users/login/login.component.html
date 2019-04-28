@@ -5,7 +5,7 @@
             <div class="col-12 my-5 text-center">
                 <div class="container text-center mb-3">
                     <a [routerLink]="['/home']"><img class="rounded mx-auto d-block logo" src="../../../../assets/img/png/zen-black.png" alt="Oracle-System-Logo"></a>
-                    <h4 class="card-title font-weight-light pt-3">Sign in to Oracle System</h4>
+                    <h4 class="card-title font-weight-light pt-3">Sign in to {{ title }}</h4>
                 </div>
                 <div class="container py-2">
                     <div class="card">
@@ -29,7 +29,7 @@
                 </div>
                 <div class="container">
                     <div class="card">
-                        <p class="m-3">New to Oracle System? <a [routerLink]="['/register']"> Create an account</a></p>
+                        <p class="m-3">New to {{ title }}? <a [routerLink]="['/register']"> Create an account</a></p>
                     </div>
                 </div>
             </div>
