@@ -1,0 +1,260 @@
+<section>
+    <nav>
+        <div class="nav nav-pills nav-fill w-100" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link text-white active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true" (click)="initComponent()">Register</a>
+            <a class="nav-item nav-link text-white" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false" (click)="initComponent()">Data</a>
+        </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+        <!-- Register User Option -->
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <article class="bg-light">
+                <div class="container h-100">
+                    <div class="row h-100 align-items-center">
+                        <div class="col-12 my-5 text-center">
+                            <div class="container text-center mb-3">
+                                <i class="fas fa-user-plus fa-5x fa-fw"></i>
+                                <h4 class="card-title font-weight-light pt-3">Register New User</h4>
+                            </div>
+                            <div class="container text-left py-2">
+                                <div class="card">
+                                    <article class="card-body">
+                                        <form [formGroup]="userForm" (ngSubmit)="onCreateUser()">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="email"> Email </label>
+                                                    <input type="email" id="inputEmail" formControlName="email" required autocomplete="new-password" class="form-control">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="password"> Password </label>
+                                                    <input type="password" id="inputPassword" formControlName="password" required autocomplete="new-password" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="inputAddress"> Name </label>
+                                                    <input type="text" class="form-control" formControlName="name" id="inputName" placeholder="">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="inputAddress2"> Lastname </label>
+                                                    <input type="text" class="form-control" id="inputLastName" formControlName="lastName" placeholder="">
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="inputUnit"> Unit Rol </label>
+                                                    <select class="custom-select form-control" id="inputUnit" formControlName="unit">
+                                                        <option *ngFor="let unit of units" [ngValue]="unit">{{ unit }}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="inputRol"> System Rol </label>
+                                                    <select class="custom-select form-control" id="inputRol" formControlName="rol">
+                                                        <option *ngFor="let rol of roles" [ngValue]="rol">{{ rol }}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <hr class="rgba-white-light mx-4 my-3">
+                                            <div class="form-group">
+                                                <button type="submit" class="button btn btn-primary btn-block"> Register </button>
+                                            </div>
+                                        </form>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <!-- User Data Option -->
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <article class="bg-light">
+                <div class="container-fluid h-100">
+                    <div class="row h-100 align-items-center mx-5">
+                        <div class="col-12 my-5 text-center">
+                            <div class="container text-center">
+                                <i class="fas fa-users fa-5x fa-fw"></i>
+                                <h4 class="card-title font-weight-light pt-3">Users Data</h4>
+                            </div>
+                            <!-- Search Users - Pipe -->
+                            <div class="container mx-auto my-3">
+                                <form #searchForm="ngForm">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <input type="text" name="searchField" class="form-control" placeholder="Filter table..." [(ngModel)]="searchTerm">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Search Users - Pipe -->
+                            <!-- Search Users -->
+                            <div class="container mx-auto my-3">
+                                <form #searchForm="ngForm" (ngSubmit)="onReadUser(searchForm)">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-5">
+                                            <input type="text" name="searchField" class="form-control" placeholder="Search by..." [(ngModel)]="searchField">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <select class="form-control" name="searchOption" [(ngModel)]="searchOption">
+                                                <option value="-1">Choose option...</option>
+                                                <option value="0">Uid</option>
+                                                <option value="1">Email</option>
+                                                <option value="2">Name</option>
+                                                <option value="3">Lastname</option>
+                                                <option value="4">Unit</option>
+                                                <option value="5">Rol</option>
+                                                <option value="6">All users</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <button type="submit" class="btn btn-primary btn-block">Find user</button>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button type="button" class="btn btn-outline-success btn-block" (click)=syncUsers()>
+                                                <i class="fas fa-sync-alt"></i>&nbsp;Sync Users</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Search Users -->
+                            <!-- User Data Table -->
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">UID</th>
+                                            <th scope="col">EMAIL</th>
+                                            <th scope="col">NAME</th>
+                                            <th scope="col">LASTNAME</th>
+                                            <th scope="col">UNIT</th>
+                                            <th scope="col">ROL</th>
+                                            <th scope="col">OPERATIONS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white">
+                                        <tr *ngFor="let user of users | async | userFilter:searchTerm; let i = index">
+                                            <td>{{ i+1 }}</td>
+                                            <td>{{ user.uid }}</td>
+                                            <td>{{ user.email }}</td>
+                                            <td>{{ user.name }}</td>
+                                            <td>{{ user.lastName }}</td>
+                                            <td>{{ user.unit }}</td>
+                                            <td>{{ user.rol }}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-info btn-sm mr-1" data-toggle="modal" data-target="#updateModal" (click)="selectUser(user)">
+                                                    <i class="fas fa-edit fa-fw"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm ml-1" data-toggle="modal" data-target="#deleteModal" (click)="selectUser(user)">
+                                                    <i class="fas fa-trash fa-fw"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- User Data Table -->
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- Update Modal -->
+<div *ngIf="selectedUser" class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content bg-transparent">
+            <form #userUpdateForm="ngForm" (ngSubmit)="onUpdateUser(userUpdateForm)">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title" id="updateModalTitle">Update user data</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="text-white" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body bg-light">
+                    <div class="container-fluid text-center mt-2 mb-4">
+                        <i class="fas fa-user-edit fa-5x"></i>
+                    </div>
+                    <hr class="rgba-white-light mx-4 my-3">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="userEmail"> Email </label>
+                            <input type="email" name="userEmail" class="form-control" [(ngModel)]="this.us.selectedUser.email">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="userPassword"> Password </label>
+                            <div class="input-group">
+                                <input type="{{ showPass ? 'text' : 'password' }}" name="userPassword" class="form-control" [(ngModel)]="this.us.selectedUser.password">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <a class="show-pass" (click)="showPassword()">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="userName"> Name </label>
+                            <input type="text" name="userName" class="form-control" [(ngModel)]="this.us.selectedUser.name">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="userLastName"> Lastname </label>
+                            <input type="text" name="userLastName" class="form-control" [(ngModel)]="this.us.selectedUser.lastName">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="userUnit"> Unit </label>
+                            <select class="form-control" name="userUnit" [(ngModel)]="this.us.selectedUser.unit">
+                                <option *ngFor="let unit of units">{{ unit }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="userRol"> System Rol </label>
+                            <select class="form-control" name="userRol" [(ngModel)]="this.us.selectedUser.rol">
+                                <option *ngFor="let rol of roles">{{ rol }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="resetForm(userUpdateForm)">Cancel</button>
+                    <button type="submit" class="btn btn-info">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div *ngIf="selectedUser" class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content bg-transparent">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalTitle">Delete confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span class="text-white" aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body bg-light">
+                <div class="container-fluid text-center mt-2 mb-2">
+                    <i class="fas fa-exclamation-circle fa-5x"></i>
+                    <hr class="rgba-white-light mx-4 my-3">
+                    <p>Are you sure you want to delete<strong class="text-danger">"{{ selectedUser.name }}"</strong> profile?</p>
+                    <p>All information associated to this user profile will be permanently deleted.<br>
+                        <strong class="text-danger">This operation can not be undone.</strong></p>
+                </div>
+            </div>
+            <div class="modal-footer bg-light">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="onDeleteUser(selectedUser)">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
