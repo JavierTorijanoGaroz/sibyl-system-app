@@ -37,9 +37,8 @@ export class DashUsersComponent implements OnInit {
   };
 
   constructor(private us: UsersService, private fb: FormBuilder) {
-
-    this.spinIcon= false
-   }
+    this.spinIcon = false
+  }
 
   users: Observable<User[]>
   allUsers: Observable<User[]>
@@ -58,11 +57,9 @@ export class DashUsersComponent implements OnInit {
     this.users = this.us.getAllUsers()
     this.allUsers = this.users
     this.showPass = false
-
-   
   }
 
-  onCreateUser() {
+  onCreateUser(): void {
     this.us.createUser(this.userForm.value['email'],
       this.userForm.value['password'],
       this.userForm.value['name'],
@@ -71,12 +68,12 @@ export class DashUsersComponent implements OnInit {
       this.userForm.value['rol'])
   }
 
-  initComponent() {
+  initComponent(): void {
     this.buildForm()
     this.showPass = false
   }
 
-  onReadUser(form: NgForm) {
+  onReadUser(form: NgForm): void {
     switch (form.value.searchOption) {
       case "0": { // By uid
         this.users = this.us.getUserByUID_V2(form.value.searchField)
@@ -114,7 +111,7 @@ export class DashUsersComponent implements OnInit {
     }
   }
 
-  onUpdateUser(form: NgForm) {
+  onUpdateUser(form: NgForm): void {
     let updatedUser: User = {
       uid: this.selectedUser.uid,
       email: form.value.userEmail,
@@ -127,7 +124,7 @@ export class DashUsersComponent implements OnInit {
     this.us.updateUser(updatedUser)
   }
 
-  onDeleteUser(user: User) {
+  onDeleteUser(user: User): void {
     this.us.deleteUser(user)
   }
 
@@ -140,7 +137,7 @@ export class DashUsersComponent implements OnInit {
     this.showPass = !this.showPass
   }
 
-  buildForm() {
+  buildForm(): void {
     this.userForm = this.fb.group({
       'email': ['', [
         Validators.required,
@@ -168,7 +165,7 @@ export class DashUsersComponent implements OnInit {
     this.onValueChanged();
   }
 
-  onValueChanged(data?: any) {
+  onValueChanged(data?: any): void {
     if (!this.userForm) { return; }
     const form = this.userForm;
     for (const field in this.formErrors) {

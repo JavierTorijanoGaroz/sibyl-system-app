@@ -1,60 +1,73 @@
 <!-- Dashboard -->
 <div class="d-flex" id="wrapper" [class.toggled]="toggledClassApplied">
-    <!-- Dashboard Sidebar -->
-    <div class="bg-light border-right py-3" id="sidebar-wrapper">
-        <div class="sidebar-heading text-center">
-            <a class="navbar-brand mx-auto" [routerLink]="['/home']">
-                <img src="../../../../assets/img/png/zen-black.png" class="app-logo" alt="SibylSystemLogo" />
-            </a>
-            <br>
-            <a class="navbar-brand mx-auto text-dark" [routerLink]="['/home']">{{ title }}</a>
-        </div>
-        <hr class="w-75">
-        <div class="sidebar-heading d-flex justify-content-center">
-            <i class="fas fa-user fa-lg fa-fw"></i>
-            <span class="text-dark ml-2" style="font-size: 14px;">{{ email }}</span>
-        </div>
-        <hr class="w-75">
-        <div class="list-group list-group-flush mt-4">
-            <a [routerLink]="[ {outlets: {'dashboard': ['overview']}}]" class="list-group-item list-group-item-action bg-secondary text-light">Overview</a>
-            <a [routerLink]="[ {outlets: {'dashboard': ['users']}}]" class="list-group-item list-group-item-action bg-light text-dark">Users</a>
-            <a [routerLink]="[ {outlets: {'dashboard': ['patients']}}]" class="list-group-item list-group-item-action bg-light text-dark">Patients</a>
-            <a [routerLink]="[ {outlets: {'dashboard': ['locations']}}]" class="list-group-item list-group-item-action bg-light text-dark">Locations</a>
-            <a [routerLink]="[ {outlets: {'dashboard': ['equipment']}}]" class="list-group-item list-group-item-action bg-light text-dark">Equipment</a>
-        </div>
+  <!-- Dashboard Sidebar -->
+  <div class="bg-light border-right py-3" id="sidebar-wrapper">
+    <div class="sidebar-heading text-center">
+      <a class="navbar-brand mx-auto" [routerLink]="['/home']">
+        <img src="../../../../assets/img/png/zen-black.png" class="app-logo" alt="SibylSystemLogo" />
+      </a>
+      <br>
+      <a class="navbar-brand mx-auto text-dark" [routerLink]="['/home']">{{ title }}</a>
     </div>
-    <!-- Dashboard Sidebar -->
-    <!-- Dashboard Content -->
-    <div class="bg-light" id="page-content-wrapper">
-        <!-- Dashboard Navbar -->
-        <nav class="navbar navbar-expand navbar-light bg-light shadow">
-            <button class="btn btn-light mx-3 rounded-circle" id="menu-toggle" (click)="toggledClass()"><i class="fas fa-bars"></i></button>
-            <a class="navbar-brand" href="#">
-                <img src="../../../../assets/img/png/zen-black.png" width="30" height="30" class="d-inline-block align-top" alt="">
-                <span class="ml-2">{{ title }}</span>
-            </a>
-            <div class="btn-group dropdown ml-auto">
-                <button type="button" class="btn btn-light bt-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-user fa-lg fa-fw"></i>
-            </button>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <div class="container-fluid text-center">
-                        <span class="text-dark">{{ email }}</span>
-                    </div>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-dark pointer">Profile</a>
-                    <a class="dropdown-item text-dark pointer">Settings</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item text-dark pointer" (click)="logout()">Logout</a>
-                </div>
-            </div>
-        </nav>
-        <!-- Dashboard Navbar -->
-        <!-- Auxiliary Router -->
-        <router-outlet name="dashboard"></router-outlet>
-        <!-- Dashboard Footer -->
-        <app-dash-footer></app-dash-footer>
+    <hr class="w-75">
+    <div class="sidebar-heading d-flex justify-content-center">
+      <i class="fas fa-user fa-lg fa-fw mr-2"></i>
+      <span class="text-dark ml-2" style="font-size: 14px;">{{ email }}</span>
     </div>
-    <!-- Dashboard Content -->
+    <hr class="w-75">
+    <div class="list-group list-group-flush mt-4">
+      <a [routerLink]="[ {outlets: {'dashboard': ['overview']}}]"
+        class="list-group-item list-group-item-action bg-secondary text-light"><i
+          class="fas fa-home fa-lg mr-2"></i>Overview</a>
+      <a [routerLink]="[ {outlets: {'dashboard': ['users']}}]"
+        class="list-group-item list-group-item-action bg-light text-dark"><i
+          class="fas fa-users fa-lg mr-2"></i>Users</a>
+      <a [routerLink]="[ {outlets: {'dashboard': ['patients']}}]"
+        class="list-group-item list-group-item-action bg-light text-dark"><i
+          class="fas fa-user-injured fa-lg mr-2"></i>Patients</a>
+      <a [routerLink]="[ {outlets: {'dashboard': ['locations']}}]"
+        class="list-group-item list-group-item-action bg-light text-dark"><i
+          class="fas fa-map-marker-alt fa-lg mr-2"></i>Locations</a>
+      <a [routerLink]="[ {outlets: {'dashboard': ['equipment']}}]"
+        class="list-group-item list-group-item-action bg-light text-dark"><i
+          class="fas fa-medkit fa-lg mr-2"></i>Equipment</a>
+    </div>
+  </div>
+  <!-- Dashboard Sidebar -->
+  <!-- Dashboard Content -->
+  <div class="bg-light" id="page-content-wrapper">
+    <!-- Dashboard Navbar -->
+    <nav class="navbar navbar-expand navbar-light bg-light shadow">
+      <button class="btn btn-light mx-3 rounded-circle" id="menu-toggle" (click)="toggledClass()"><i
+          class="fas fa-bars"></i></button>
+      <a class="navbar-brand" href="#">
+        <img src="../../../../assets/img/png/zen-black.png" width="30" height="30" class="d-inline-block align-top"
+          alt="">
+        <span class="ml-2">{{ title }}</span>
+      </a>
+      <div class="btn-group dropdown ml-auto">
+        <button type="button" class="btn btn-light bt-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          <i class="fas fa-user fa-lg fa-fw"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          <div class="container-fluid text-center">
+            <span class="text-dark">{{ email }}</span>
+          </div>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-dark pointer">Profile</a>
+          <a class="dropdown-item text-dark pointer">Settings</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-dark pointer" (click)="logout()">Logout</a>
+        </div>
+      </div>
+    </nav>
+    <!-- Dashboard Navbar -->
+    <!-- Auxiliary Router -->
+    <router-outlet name="dashboard"></router-outlet>
+    <!-- Dashboard Footer -->
+    <app-dash-footer></app-dash-footer>
+  </div>
+  <!-- Dashboard Content -->
 </div>
 <!-- Dashboard -->
