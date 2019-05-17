@@ -1,0 +1,258 @@
+<section>
+  <article class="bg-light">
+    <div class="container-fluid h-100">
+      <div class="row h-100 align-items-center mx-5">
+        <div class="col-12 my-5 text-center">
+          <div class="container text-center">
+            <i class="fas fa-user-injured fa-5x fa-fw"></i>
+            <h4 class="card-title font-weight-light pt-3">Patients Data</h4>
+            <button type="button" class="btn btn-primary mx-auto w-50" data-toggle="modal"
+              data-target="#addPatientModal"><i class="fas fa-user-edit fa-fw"></i>&nbsp;&nbsp;Add Patient</button>
+          </div>
+          <!-- Search Patients - Pipe -->
+          <div class="container mx-auto my-3">
+            <form #searchForm="ngForm">
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <input type="text" name="searchField" class="form-control" placeholder="Filter table..."
+                    [(ngModel)]="searchTerm">
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- Search Patients - Pipe -->
+          <div class="container-fluid align-items-center">
+            <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseExample"
+              aria-expanded="false" aria-controls="collapseExample">
+              Button with data-target
+            </button>
+          </div>
+          <!-- Advance Search -->
+          <div class="collapse" id="collapseExample">
+            <div class="card card-body bg-light mt-3">
+              <div class="container mx-auto">
+                <form #searchForm="ngForm">
+                  <div class="form-row">
+                    <div class="form-group col-md-5">
+                      <input type="text" name="searchField" class="form-control" placeholder="Search by..."
+                        [(ngModel)]="searchField">
+                    </div>
+                    <div class="form-group col-md-3">
+                      <select class="form-control" name="searchOption" [(ngModel)]="searchOption">
+                        <option value="-1">Choose option...</option>
+                        <option value="0">All patients</option>
+                        <option value="1">Uid</option>
+                        <option value="2">Dni</option>
+                        <option value="3">Cip</option>
+                        <option value="4">Name</option>
+                        <option value="5">Lastname</option>
+                        <option value="6">Unit</option>
+                        <option value="7">Status</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                      <button type="submit" class="btn btn-primary btn-block" (click)="onReadPatient(searchForm)">Find
+                        patient</button>
+                    </div>
+                    <div class="col-md-2">
+                      <button type="button" class="btn btn-outline-success btn-block" (click)="syncPatients()">
+                        <i class="fas fa-sync-alt"></i>&nbsp;Sync Patients</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- Advance Search -->
+          <!-- Patients Data Table -->
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">UID</th>
+                  <th scope="col">DNI</th>
+                  <th scope="col">CIP</th>
+                  <th scope="col">NAME</th>
+                  <th scope="col">LASTNAME</th>
+                  <th scope="col">LOCATION</th>
+                  <th scope="col">STATUS</th>
+                  <th scope="col">OPERATIONS</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white">
+                <tr *ngFor="let patient of patients | patientFilter:searchTerm; let i = index">
+                  <td>{{ i+1 }}</td>
+                  <td>{{ patient.uid }}</td>
+                  <td>{{ patient.dni }}</td>
+                  <td>{{ patient.cip }}</td>
+                  <td>{{ patient.name }}</td>
+                  <td>{{ patient.lastName }}</td>
+                  <td>{{ patient.unit }}</td>
+                  <td>{{ patient.status }}</td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-sm mr-1" data-toggle="modal"
+                      data-target="#updateModal" (click)="selectPatient(patient)">
+                      <i class="fas fa-edit fa-fw"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm ml-1" data-toggle="modal"
+                      data-target="#deleteModal" (click)="selectPatient(patient)">
+                      <i class="fas fa-trash fa-fw"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- Patients Data Table -->
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+<!-- Add Patient - Modal -->
+<div class="modal fade" id="addPatientModal" tabindex="-1" role="dialog" aria-labelledby="addPatientModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content bg-transparent">
+      <form #patientAddForm="ngForm">
+        <div class="modal-header bg-primary text-white">
+          <i class="fas fa-user-edit fa-2x ml-1"></i>
+          <h5 class="modal-title ml-2" id="addPatientModalTitle">Add patient</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span class="text-white" aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body bg-light">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="dni"> Dni </label>
+              <input type="text" name="dni" class="form-control" [(ngModel)]="dni">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="cip"> Cip </label>
+              <input type="text" name="cip" class="form-control" [(ngModel)]="cip">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="name"> Name </label>
+              <input type="text" name="name" class="form-control" [(ngModel)]="name">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="lastName"> Lastname </label>
+              <input type="text" name="lastName" class="form-control" [(ngModel)]="lastName">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="unit"> Unit </label>
+              <select class="form-control" name="unit" [(ngModel)]="unit">
+                <option *ngFor="let unit of units">{{ unit }}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="status"> Status </label>
+              <select class="form-control" name="status" [(ngModel)]="status">
+                <option *ngFor="let status of statuses">{{ status }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer bg-light">
+          <button type="button" class="btn btn-secondary" (click)="resetForm(patientAddForm)"
+            data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="onCreatePatient(patientAddForm)" data-dismiss="modal">Save
+            changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Update Modal -->
+<div *ngIf="selectPatient" class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+  aria-labelledby="updateModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content bg-transparent">
+      <form #patientUpdateForm="ngForm">
+        <div class="modal-header bg-info text-white">
+          <i class="fas fa-edit fa-2x ml-1"></i>
+          <h5 class="modal-title ml-2" id="updateModalTitle">Update patient data</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span class="text-white" aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body bg-light">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="dni"> Dni </label>
+              <input type="text" name="dni" class="form-control" [(ngModel)]="this.ps.selectedPatient.dni">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="cip"> Cip </label>
+              <input type="text" name="cip" class="form-control" [(ngModel)]="this.ps.selectedPatient.cip">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="name"> Name </label>
+              <input type="text" name="name" class="form-control" [(ngModel)]="this.ps.selectedPatient.name">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="lastName"> Lastname </label>
+              <input type="text" name="lastName" class="form-control" [(ngModel)]="this.ps.selectedPatient.lastName">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="unit"> Unit </label>
+              <select class="form-control" name="unit" [(ngModel)]="this.ps.selectedPatient.unit">
+                <option *ngFor="let unit of units">{{ unit }}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="status"> Status </label>
+              <select class="form-control" name="status" [(ngModel)]="this.ps.selectedPatient.status">
+                <option *ngFor="let status of statuses">{{ status }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer bg-light">
+          <button type="button" class="btn btn-secondary" (click)="resetForm(patientUpdateForm)"
+            data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-info" (click)="onUpdatePatient(patientUpdateForm)" data-dismiss="modal">Save
+            changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Delete Patient - Modal -->
+<div *ngIf="selectedPatient" class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+  aria-labelledby="deleteModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content bg-transparent">
+      <div class="modal-header bg-danger text-white">
+        <i class="fas fa-exclamation-circle fa-2x ml-1"></i>
+        <h5 class="modal-title ml-2" id="deleteModalTitle">Delete confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span class="text-white" aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body bg-light">
+        <div class="container-fluid text-center mt-2 mb-2">
+          <p>Are you sure you want to delete<strong class="text-danger">"{{ selectedPatient.name }}"</strong> profile?
+          </p>
+          <p>All information associated to this patient profile will be permanently deleted.<br>
+            <strong class="text-danger">This operation can not be undone.</strong></p>
+        </div>
+      </div>
+      <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal"
+          (click)="onDeletePatient(selectedPatient)">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
