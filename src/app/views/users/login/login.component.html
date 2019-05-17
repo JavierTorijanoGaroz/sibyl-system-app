@@ -10,18 +10,24 @@
                 <div class="container py-2">
                     <div class="card">
                         <article class="card-body">
-                            <form>
+                            <form [formGroup]="userForm" (ngSubmit)="login()">
                                 <div class="form-group">
-                                    <label>Email address</label>
-                                    <input type="email" class="form-control" placeholder="">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email2" formControlName="email" required autocomplete="new-password" class="form-control">
+                                    <div *ngIf="formErrors.email" class="help is-danger mt-3 text-danger">
+                                        {{ formErrors.email }}
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Password</label>
-                                    <input class="form-control" type="password">
+                                    <label for="password">Password</label>
+                                    <input type="password" id="password" name="password2" formControlName="password" required autocomplete="new-password" class="form-control">
+                                    <div *ngIf="formErrors.password" class="help is-danger">
+                                        {{ formErrors.password }}
+                                    </div>
                                 </div>
                                 <hr class="rgba-white-light mx-4 my-3">
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-block" [routerLink]="['/dashboard']"> Login </button>
+                                    <button type="submit" class="button btn btn-primary btn-block" [disabled]="!userForm.valid"> Login </button>
                                 </div>
                             </form>
                         </article>

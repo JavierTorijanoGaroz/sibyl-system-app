@@ -7,6 +7,21 @@ body {
     min-width: 50px !important;
 }
 
+.user-photo {
+    max-width: 20px !important;
+    min-width: 20px !important;
+}
+
+.pointer:hover {
+    cursor: pointer;
+    background-color: rgb(235, 235, 235);
+}
+
+.dropdown-menu.show {
+    display: block;
+    width: 220px;
+}
+
 #sidebar-wrapper {
     min-height: 100vh;
     margin-left: -15rem;
@@ -44,4 +59,8 @@ body {
     #wrapper.toggled #sidebar-wrapper {
         margin-left: -15rem;
     }
+}
+
+.dropdown-toggle::after {
+    display: none;
 }

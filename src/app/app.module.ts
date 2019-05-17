@@ -1,6 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+
+// Components
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './views/home/home.component';
@@ -10,31 +14,55 @@ import { HcPatientsSearchComponent } from './views/home/components/hc-patients-s
 import { MainFooterComponent } from './views/shared/components/main-footer/main-footer.component';
 import { LoginComponent } from './views/users/login/login.component';
 import { DashboardComponent } from './views/users/dashboard/dashboard.component';
+import { DashUsersComponent } from './views/users/dashboard/components/dash-users/dash-users.component';
+import { DashPatientsComponent } from './views/users/dashboard/components/dash-patients/dash-patients.component';
+import { DashFooterComponent } from './views/users/dashboard/components/dash-footer/dash-footer.component';
 import { PreloadingComponent } from './views/shared/components/preloading/preloading.component';
 import { PageNotFoundComponent } from './views/errors/page-not-found/page-not-found.component';
 import { ServerErrorComponent } from './views/errors/server-error/server-error.component';
 
+// Firebase
+import { environment } from '../environments/environment';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule, FirestoreSettingsToken, AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AuthService } from './core/auth.service';
+import { AuthGuard } from './core/auth.guard';
+
+// Pipes
+import { UserFilterPipe } from './shared/pipes/user-filter.pipe';
+import { PatientFilterPipe } from './shared/pipes/patient-filter.pipe';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    MainNavbarComponent, 
-    HcMastheadAComponent, 
+    MainNavbarComponent,
+    HcMastheadAComponent,
     HcPatientsSearchComponent,
     MainFooterComponent,
     LoginComponent,
     DashboardComponent,
+    DashPatientsComponent,
     PreloadingComponent,
     PageNotFoundComponent,
-    ServerErrorComponent
+    ServerErrorComponent,
+    DashFooterComponent,
+    DashUsersComponent,
+    UserFilterPipe,
+    PatientFilterPipe
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
-  providers: [],
+  providers: [AuthService, AuthGuard, AngularFirestore, { provide: FirestoreSettingsToken, useValue: {} }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

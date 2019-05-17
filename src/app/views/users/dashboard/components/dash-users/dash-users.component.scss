@@ -1,0 +1,23 @@
+.logo {
+    width: 60px;
+    height: 60px;
+}
+
+nav {
+    background-color: #727272;
+}
+
+.nav-item:hover {
+    cursor: pointer;
+    background-color: #727272;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    color: rgb(255, 246, 246) !important;
+    background-color: #0080ff;
+}
+
+.show-pass:hover {
+    cursor: pointer;
+}

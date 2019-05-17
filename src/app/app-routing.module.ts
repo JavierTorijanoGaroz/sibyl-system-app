@@ -4,21 +4,25 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './views/home/home.component';
 import { LoginComponent } from './views/users/login/login.component';
 import { DashboardComponent } from './views/users/dashboard/dashboard.component';
+import { DashPatientsComponent } from './views/users/dashboard/components/dash-patients/dash-patients.component';
+import { DashUsersComponent } from './views/users/dashboard/components/dash-users/dash-users.component';
+import { PreloadingComponent } from './views/shared/components/preloading/preloading.component';
 import { PageNotFoundComponent } from './views/errors/page-not-found/page-not-found.component';
 import { ServerErrorComponent } from './views/errors/server-error/server-error.component';
+import { AuthGuard } from './core/auth.guard';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   {
-    path: 'dashboard', component: DashboardComponent, children: [
-      { path: '', component: PageNotFoundComponent, outlet: 'user' },
-      { path: 'overview', component: LoginComponent, outlet: 'user' },
-      { path: 'users', component: HomeComponent, outlet: 'user' },
-      { path: 'patients', component: HomeComponent, outlet: 'user' },
-      { path: 'locations', component: HomeComponent, outlet: 'user' },
-      { path: 'equipment', component: HomeComponent, outlet: 'user' }
+    path: 'user/:uid', component: DashboardComponent, canActivate: [AuthGuard], children: [
+      { path: '', component: PreloadingComponent, outlet: 'dashboard' },
+      { path: 'overview', component: PreloadingComponent, outlet: 'dashboard' },
+      { path: 'users', component: DashUsersComponent, outlet: 'dashboard' },
+      { path: 'patients', component: DashPatientsComponent, outlet: 'dashboard' },
+      { path: 'locations', component: DashUsersComponent, outlet: 'dashboard' },
+      { path: 'equipment', component: DashUsersComponent, outlet: 'dashboard' }
     ]
   },
   { path: '404', component: PageNotFoundComponent },
