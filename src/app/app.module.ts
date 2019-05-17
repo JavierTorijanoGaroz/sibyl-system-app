@@ -31,6 +31,7 @@ import { AuthGuard } from './core/auth.guard';
 
 // Pipes
 import { UserFilterPipe } from './shared/pipes/user-filter.pipe';
+import { PatientFilterPipe } from './shared/pipes/patient-filter.pipe';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { UserFilterPipe } from './shared/pipes/user-filter.pipe';
     ServerErrorComponent,
     DashFooterComponent,
     DashUsersComponent,
-    UserFilterPipe
+    UserFilterPipe,
+    PatientFilterPipe
   ],
   imports: [
     BrowserModule,
