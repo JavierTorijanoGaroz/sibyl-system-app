@@ -1,51 +1,31 @@
 <!-- Section - Patients Search -->
 <section class="patients-search text-white text-center">
-    <div class="overlay"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-9 mx-auto">
-                <h2 class="mb-4">Ready to find a patient? Enter the code now!</h2>
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-9 mx-auto">
+        <h2 class="mb-4">Ready to find a patient? Enter the code now!</h2>
+      </div>
+      <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+        <form #searchForm="ngForm">
+          <div class="form-row">
+            <div class="col-12 col-md-9 mb-2 mb-md-0">
+              <input type="text" name="searchField" class="form-control form-control-lg"
+                placeholder="Enter the CIP number..." [(ngModel)]="searchField">
             </div>
-            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-                <form>
-                    <div class="form-row">
-                        <div class="col-12 col-md-9 mb-2 mb-md-0">
-                            <input type="email" class="form-control form-control-lg" placeholder="Enter your code...">
-                        </div>
-                        <div class="col-12 col-md-3">
-                            <!-- Modal - Search result -->
-                            <button type="button" class="btn btn-block btn-lg btn-primary" data-toggle="modal" data-target="#exampleModal">Find patient!</button>
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form>
-                                                <div class="form-group">
-                                                    <label for="recipient-name" class="col-form-label">Patient code</label>
-                                                    <input type="text" class="form-control" id="recipient-name" placeholder="Enter code...">
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal" [routerLink]="['/login']">Find patient</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Modal - Search result -->
-                        </div>
-                    </div>
-                </form>
+            <div class="col-12 col-md-3">
+              <!-- Modal - Button Trigger Modal -->
+              <button type="button" class="btn btn-block btn-lg btn-primary" (click)="onReadPatient(searchForm)"> Find
+                patient! </button>
             </div>
-        </div>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
+  <div class="container-fluid text-center">
+    <p *ngIf="flag" class="bg-success text-white">The patient {{ patient.name }} has been found.</p>
+    <p *ngIf="!flag" class=" bg-danger text-white">No encontrado</p>
+  </div>
 </section>
 <!-- Section - Patients Search -->
