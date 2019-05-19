@@ -14,7 +14,6 @@
                 placeholder="Enter the CIP number..." [(ngModel)]="searchField">
             </div>
             <div class="col-12 col-md-3">
-              <!-- Modal - Button Trigger Modal -->
               <button type="button" class="btn btn-block btn-lg btn-primary" (click)="onReadPatient(searchForm)"> Find
                 patient! </button>
             </div>
@@ -23,9 +22,10 @@
       </div>
     </div>
   </div>
-  <div class="container-fluid text-center">
-    <p *ngIf="flag" class="bg-success text-white">The patient {{ patient.name }} has been found.</p>
-    <p *ngIf="!flag" class=" bg-danger text-white">No encontrado</p>
+  <!-- TODO: Maquetar vista -->
+  <div *ngIf="flag!==-1" class="container text-center text-white searc">
+    <p *ngIf="flag===0" class="bg-danger">Patient not found.</p>
+    <p *ngIf="flag===1" class="bg-success">The patient {{ patient.name }} has been found.</p>
   </div>
 </section>
 <!-- Section - Patients Search -->

@@ -12,17 +12,24 @@ import { NgForm } from '@angular/forms';
 export class HcPatientsSearchComponent implements OnInit {
 
   patient: Patient
-  flag: boolean
+  flag: number
 
   constructor(private ps: PatientsService) { }
 
   ngOnInit() {
+    this.flag = -1
   }
 
+  /**
+   * Search a patient by CIP
+   * 
+   * @param form Patient search form
+   */
   onReadPatient(form: NgForm): void {
     this.ps.getPatientByCIP(form.value.searchField).subscribe(patients => {
       this.patient = patients[0]
-      this.flag = (patients) ? true : false
+      this.flag = (this.patient===undefined) ? 0 : 1
+      console.log(this.flag)
     }) 
   }
 }

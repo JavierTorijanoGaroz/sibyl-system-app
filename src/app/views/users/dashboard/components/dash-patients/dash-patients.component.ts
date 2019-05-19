@@ -18,16 +18,24 @@ export class DashPatientsComponent implements OnInit {
   patient: Patient
   selectedPatient: Patient
 
-
-  units: string[] = ['Unit 01', 'Unit 02', 'Unit 03', 'Unit 04', 'Unit 05']
-  statuses: string[] = ['Status A', 'Status B', 'Status C']
+  units: any = ['Unit 01', 'Unit 02', 'Unit 03', 'Unit 04', 'Unit 05']
+  statuses: any = ['Status A', 'Status B', 'Status C']
+  searchOptions: any = [
+    { text: 'Uid', value: '0' },
+    { text: 'Dni', value: '1' },
+    { text: 'Cip', value: '2' },
+    { text: 'Name', value: '3' },
+    { text: 'Lastname', value: '4' },
+    { text: 'Unit', value: '5' },
+    { text: 'Status', value: '6' }
+  ]
 
   spinIcon: boolean
 
   ngOnInit() {
     this.ps.getAllPatients().subscribe(patients => {
       this.patients = patients
-      this.allPatients = patients // Patients List Backup
+      this.allPatients = patients
     })
   }
 
@@ -46,55 +54,51 @@ export class DashPatientsComponent implements OnInit {
   }
 
   onReadPatient(form: NgForm): void {
-    switch (form.value.searchOption) {
-      case "0": { // Show all users
-        this.patients = this.allPatients
-        break;
-      }
-      case "1": { // By uid
+    switch (form.value.searchOption.value) {
+      case "0": { // By uid
         this.ps.getPatientByUID(form.value.searchField).subscribe(patients => {
           this.patients = patients
         })
         break;
       }
-      case "2": { // By dni
+      case "1": { // By dni
         this.ps.getPatientByDNI(form.value.searchField).subscribe(patients => {
           this.patients = patients
         })
         break;
       }
-      case "3": { // By cip        
+      case "2": { // By cip        
         this.ps.getPatientByCIP(form.value.searchField).subscribe(patients => {
           this.patients = patients
         })
         break;
       }
-      case "4": { // By name
+      case "3": { // By name
         this.ps.getPatientByName(form.value.searchField).subscribe(patients => {
           this.patients = patients
         })
         break;
       }
-      case "5": { // By lastName
+      case "4": { // By lastName
         this.ps.getPatientByLastName(form.value.searchField).subscribe(patients => {
           this.patients = patients
         })
         break;
       }
-      case "6": { // By unit
+      case "5": { // By unit
         this.ps.getPatientByUnit(form.value.searchField).subscribe(patients => {
           this.patients = patients
         })
         break;
       }
-      case "7": { // By status
+      case "6": { // By status
         this.ps.getPatientByStatus(form.value.searchField).subscribe(patients => {
           this.patients = patients
         })
         break;
       }
       default: { // Invalid option 
-        console.log("Invalid option...")
+        console.log("Invalid option...") // TODO: Mostrar información al usuario
         break;
       }
     }

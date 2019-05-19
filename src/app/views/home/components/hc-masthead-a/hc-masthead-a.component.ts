@@ -5,9 +5,11 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './hc-masthead-a.component.html',
   styleUrls: ['./hc-masthead-a.component.scss']
 })
+
 export class HcMastheadAComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+   }
 
   ngOnInit() {
   }
