@@ -4,6 +4,6 @@ export class Patient {
     cip?: string
     name?: string
     lastName?: string
-    unit?: string
+    location?: string
     status?: string
 }

@@ -4,6 +4,6 @@ export interface User {
     password?: string
     name?: string
     lastName?: string
-    unit?: string
+    location?: string
     rol?: string
 }
