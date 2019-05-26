@@ -44,10 +44,10 @@ export class UsersService {
    * @param password 
    * @param name 
    * @param lastName 
-   * @param unit 
+   * @param location 
    * @param rol 
    */
-  createUser(email: string, password: string, name: string, lastName: string, unit: string, rol: string) {
+  createUser(email: string, password: string, name: string, lastName: string, location: string, rol: string) {
     auxFirebaseApp.auth().createUserWithEmailAndPassword(email, password).
       then(userCredential => {
         console.log("User " + userCredential.user.uid + " created successfully!");
@@ -58,7 +58,7 @@ export class UsersService {
           password: password,
           name: name,
           lastName: lastName,
-          unit: unit,
+          location: location,
           rol: rol
         }
         userRef.set(userData)
@@ -144,11 +144,11 @@ getAllUsers() {
 
   /**
    * 
-   * @param userUnit 
+   * @param userLocation
    */
-  getUserByUnit(userUnit: string) {
+  getUserByLocation(userLocation: string) {
     this.usersCollection = this.afs.collection<User>('users', ref => {
-      return ref.where('unit', '==', userUnit)
+      return ref.where('location', '==', userLocation)
     })
     return this.users = this.usersCollection.valueChanges()
   }

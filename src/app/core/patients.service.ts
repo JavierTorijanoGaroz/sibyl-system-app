@@ -55,10 +55,10 @@ export class PatientsService {
   }
 
   /**
- * Get a patient by UID
- * 
- * @param patientUID The patient's uid number
- */
+   * Get a patient by UID
+   * 
+   * @param patientUID The patient's uid number
+   */
   getPatientByUID(patientUID: string) {
     this.patientsCollection = this.afs.collection<Patient>('patients', ref => {
       return ref.where('uid', '==', patientUID)
@@ -67,10 +67,10 @@ export class PatientsService {
   }
 
   /**
- * Get a patient by DNI 
- * 
- * @param patientDNI The patient's dni number
- */
+   * Get a patient by DNI 
+   * 
+   * @param patientDNI The patient's dni number
+   */
   getPatientByDNI(patientDNI: string) {
     this.patientsCollection = this.afs.collection<Patient>('patients', ref => {
       return ref.where('dni', '==', patientDNI)
@@ -92,10 +92,10 @@ export class PatientsService {
   }
 
   /**
- * Get a patient by Name
- * 
- * @param patientName The patient's name
- */
+   * Get a patient by Name
+   * 
+   * @param patientName The patient's name
+   */
   getPatientByName(patientName: string) {
     this.patientsCollection = this.afs.collection<Patient>('patients', ref => {
       return ref.where('name', '==', patientName)
@@ -104,40 +104,40 @@ export class PatientsService {
   }
 
     /**
- * Get a patient by Lastname
- * 
- * @param patientLastName The patient's lastname
- */
-getPatientByLastName(patientLastName: string) {
-  this.patientsCollection = this.afs.collection<Patient>('patients', ref => {
-    return ref.where('lastName', '==', patientLastName)
-  })
-  return this.patients = this.patientsCollection.valueChanges()
-}
+   * Get a patient by Lastname
+   * 
+   * @param patientLastName The patient's lastname
+   */
+  getPatientByLastName(patientLastName: string) {
+    this.patientsCollection = this.afs.collection<Patient>('patients', ref => {
+      return ref.where('lastName', '==', patientLastName)
+    })
+    return this.patients = this.patientsCollection.valueChanges()
+  }
 
   /**
- * Get a patient by Unit
- * 
- * @param patientUnit The patient's unit
- */
-getPatientByUnit(patientUnit: string) {
-  this.patientsCollection = this.afs.collection<Patient>('patients', ref => {
-    return ref.where('unit', '==', patientUnit)
-  })
-  return this.patients = this.patientsCollection.valueChanges()
-}
+   * Get a patient by Location
+   * 
+   * @param patientLocation The patient's location
+   */
+  getPatientByLocation(patientLocation: string) {
+    this.patientsCollection = this.afs.collection<Patient>('patients', ref => {
+      return ref.where('location', '==', patientLocation)
+    })
+    return this.patients = this.patientsCollection.valueChanges()
+  }
 
   /**
- * Get a patient by Status
- * 
- * @param patientStatus The patient's status
- */
-getPatientByStatus(patientStatus: string) {
-  this.patientsCollection = this.afs.collection<Patient>('patients', ref => {
-    return ref.where('status', '==', patientStatus)
-  })
-  return this.patients = this.patientsCollection.valueChanges()
-}
+   * Get a patient by Status
+   * 
+   * @param patientStatus The patient's status
+   */
+  getPatientByStatus(patientStatus: string) {
+    this.patientsCollection = this.afs.collection<Patient>('patients', ref => {
+      return ref.where('status', '==', patientStatus)
+    })
+    return this.patients = this.patientsCollection.valueChanges()
+  }
 
   /**
    * Update patient document stored on Firestore
@@ -149,7 +149,7 @@ getPatientByStatus(patientStatus: string) {
   }
 
   /**
-   * Delete user data from Firestore
+   * Delete patient data from Firestore
    * 
    * @param patient The patient to delete
    */

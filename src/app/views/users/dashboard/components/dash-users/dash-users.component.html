@@ -47,9 +47,9 @@
                       </div>
                       <div class="form-row">
                         <div class="form-group col-md-6">
-                          <label for="inputUnit"> Unit Rol </label>
-                          <select class="custom-select form-control" id="inputUnit" formControlName="unit">
-                            <option *ngFor="let unit of units" [ngValue]="unit">{{ unit }}</option>
+                          <label for="inputLocation"> Location </label>
+                          <select class="custom-select form-control" id="inputLocation" formControlName="location">
+                            <option *ngFor="let location of locations" [ngValue]="location">{{ location }}</option>
                           </select>
                         </div>
                         <div class="form-group col-md-6">
@@ -81,50 +81,33 @@
               <div class="container text-center">
                 <i class="fas fa-users fa-5x fa-fw"></i>
                 <h4 class="card-title font-weight-light pt-3">Users Data</h4>
-              </div>
-              <!-- Search Users - Pipe -->
-              <div class="container mx-auto my-3">
-                <form #searchForm="ngForm">
-                  <div class="form-row">
-                    <div class="form-group col-md-12">
-                      <input type="text" name="searchField" class="form-control" placeholder="Filter table..."
-                        [(ngModel)]="searchTerm">
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <!-- Search Users - Pipe -->
-              <div class="container-fluid align-items-center">
-                <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseExample"
-                  aria-expanded="false" aria-controls="collapseExample">
-                  Button with data-target
-                </button>
+                <button type="button" class="btn btn-primary mx-auto mt-2 w-50" data-toggle="modal"
+                  data-target="#addUserModal"><i class="fas fa-user fa-fw"></i>&nbsp;&nbsp;Register
+                  User</button>
               </div>
               <!-- Advance Search -->
+              <div class="container-fluid align-items-center">
+                <button class="btn btn-dark my-3 w-50" type="button" data-toggle="collapse"
+                  data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i
+                    class="fas fa-search fa-fw"></i>&nbsp;&nbsp;Advance Search</button>
+              </div>
               <div class="collapse" id="collapseExample">
-                <div class="card card-body bg-light mt-3">
+                <div class="card card-body">
                   <div class="container mx-auto">
-                    <form #searchForm="ngForm">
+                    <form #searchForm="ngForm" class="mt-3">
                       <div class="form-row">
                         <div class="form-group col-md-5">
-                          <input type="text" name="searchField" class="form-control" placeholder="Search by..."
-                            [(ngModel)]="searchField">
+                          <input type="text" name="searchField" class="form-control" placeholder="Search by..." ngModel>
                         </div>
                         <div class="form-group col-md-3">
-                          <select class="form-control" name="searchOption" [(ngModel)]="searchOption">
-                            <option value="-1">Choose option...</option>
-                            <option value="0">Uid</option>
-                            <option value="1">Email</option>
-                            <option value="2">Name</option>
-                            <option value="3">Lastname</option>
-                            <option value="4">Unit</option>
-                            <option value="5">Rol</option>
-                            <option value="6">All users</option>
+                          <select class="custom-select form-control" name="searchOption" ngModel>
+                            <option value="" disabled>Choose search criteria...</option>
+                            <option *ngFor="let option of searchOptions" [ngValue]="option">{{ option.text }}</option>
                           </select>
                         </div>
                         <div class="form-group col-md-2">
                           <button type="submit" class="btn btn-primary btn-block" (click)="onReadUser(searchForm)">Find
-                            user</button>
+                            User</button>
                         </div>
                         <div class="col-md-2">
                           <button type="button" class="btn btn-outline-success btn-block" (click)="syncUsers()">
@@ -136,6 +119,18 @@
                 </div>
               </div>
               <!-- Advance Search -->
+              <!-- Search Users - Pipe -->
+              <div class="container mx-auto my-3">
+                <form #filterForm="ngForm">
+                  <div class="form-row">
+                    <div class="form-group col-md-12">
+                      <input type="text" name="searchField" class="form-control" placeholder="Filter table..."
+                        [(ngModel)]="searchTerm">
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- Search Users - Pipe -->
               <!-- User Data Table -->
               <div class="table-responsive">
                 <table class="table table-hover">
@@ -146,7 +141,7 @@
                       <th scope="col">EMAIL</th>
                       <th scope="col">NAME</th>
                       <th scope="col">LASTNAME</th>
-                      <th scope="col">UNIT</th>
+                      <th scope="col">LOCATION</th>
                       <th scope="col">ROL</th>
                       <th scope="col">OPERATIONS</th>
                     </tr>
@@ -158,7 +153,7 @@
                       <td>{{ user.email }}</td>
                       <td>{{ user.name }}</td>
                       <td>{{ user.lastName }}</td>
-                      <td>{{ user.unit }}</td>
+                      <td>{{ user.location }}</td>
                       <td>{{ user.rol }}</td>
                       <td>
                         <button type="button" class="btn btn-info btn-sm mr-1" data-toggle="modal"
@@ -182,7 +177,66 @@
     </div>
   </div>
 </section>
-<!-- Update Modal -->
+<!-- Add User - Modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content bg-transparent">
+      <form #userAddForm="ngForm">
+        <div class="modal-header bg-primary text-white">
+          <i class="fas fa-user-edit fa-2x ml-1"></i>
+          <h5 class="modal-title ml-2" id="addUserModalTitle">Register user</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span class="text-white" aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body bg-light">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="dni"> Dni </label>
+              <input type="text" name="dni" class="form-control" [(ngModel)]="dni">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="cip"> Cip </label>
+              <input type="text" name="cip" class="form-control" [(ngModel)]="cip">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="name"> Name </label>
+              <input type="text" name="name" class="form-control" [(ngModel)]="name">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="lastName"> Lastname </label>
+              <input type="text" name="lastName" class="form-control" [(ngModel)]="lastName">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="location"> location </label>
+              <select class="form-control" name="location" ngModel>
+                <option *ngFor="let location of locations">{{ location }}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="status"> Status </label>
+              <select class="form-control" name="status" ngModel>
+                <option *ngFor="let status of statuses">{{ status }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer bg-light">
+          <button type="button" class="btn btn-secondary" (click)="resetForm(userAddForm)"
+            data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="onCreateUser(userAddForm)" data-dismiss="modal">Save
+            changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Update User - Modal -->
 <div *ngIf="selectedUser" class="modal fade" id="updateModal" tabindex="-1" role="dialog"
   aria-labelledby="updateModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -228,9 +282,9 @@
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="userUnit"> Unit </label>
-              <select class="form-control" name="userUnit" [(ngModel)]="this.us.selectedUser.unit">
-                <option *ngFor="let unit of units">{{ unit }}</option>
+              <label for="userLocation"> Location </label>
+              <select class="form-control" name="userLocation" [(ngModel)]="this.us.selectedUser.location">
+                <option *ngFor="let location of locations">{{ location }}</option>
               </select>
             </div>
             <div class="form-group col-md-6">
@@ -251,7 +305,7 @@
     </div>
   </div>
 </div>
-<!-- Delete Modal -->
+<!-- Delete User - Modal -->
 <div *ngIf="selectedUser" class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
   aria-labelledby="deleteModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
