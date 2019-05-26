@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { PatientsService } from 'src/app/core/patients.service';
-import { LocationsService } from 'src/app/core/locations.service';
-import { Patient } from '../../../../../core/patient.model';
-import { Observable } from 'rxjs';
+import { Patient } from 'src/app/core/patient.model';
 
 @Component({
   selector: 'app-dash-patients',
@@ -12,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class DashPatientsComponent implements OnInit {
 
-  constructor(private ps: PatientsService,private ls: LocationsService) { }
+  constructor(private ps: PatientsService) { }
 
   patients: Patient[]
   allPatients: Patient[]

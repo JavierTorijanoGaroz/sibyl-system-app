@@ -10,7 +10,7 @@ import * as firebase from 'firebase/app'
 export class DashboardComponent implements OnInit {
 
   title: string = 'Sibyl System'
-  toggledClassApplied: boolean = false
+  toggledClassApplied: boolean = true
 
   currentUser: any
   name: string

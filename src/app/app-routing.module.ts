@@ -7,6 +7,7 @@ import { DashboardComponent } from './views/users/dashboard/dashboard.component'
 import { DashUsersComponent } from './views/users/dashboard/components/dash-users/dash-users.component';
 import { DashPatientsComponent } from './views/users/dashboard/components/dash-patients/dash-patients.component';
 import { DashLocationsComponent } from './views/users/dashboard/components/dash-locations/dash-locations.component';
+import { DashEquipamentsComponent } from './views/users/dashboard/components/dash-equipaments/dash-equipaments.component';
 import { PreloadingComponent } from './views/shared/components/preloading/preloading.component';
 import { PageNotFoundComponent } from './views/errors/page-not-found/page-not-found.component';
 import { ServerErrorComponent } from './views/errors/server-error/server-error.component';
@@ -23,7 +24,7 @@ const routes: Routes = [
       { path: 'users', component: DashUsersComponent, outlet: 'dashboard' },
       { path: 'patients', component: DashPatientsComponent, outlet: 'dashboard' },
       { path: 'locations', component: DashLocationsComponent, outlet: 'dashboard' },
-      { path: 'equipment', component: DashUsersComponent, outlet: 'dashboard' }
+      { path: 'equipment', component: DashEquipamentsComponent, outlet: 'dashboard' }
     ]
   },
   { path: '404', component: PageNotFoundComponent },

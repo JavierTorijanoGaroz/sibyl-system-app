@@ -46,19 +46,20 @@
         <span class="ml-2">{{ title }}</span>
       </a>
       <div class="btn-group dropdown ml-auto">
-        <button type="button" class="btn btn-light bt-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-          aria-expanded="false">
+        <button type="button" class="btn btn-dark bt-sm dropdown-toggle round-button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-user fa-lg fa-fw"></i>
+          <i class="fas fa-caret-down"></i>
         </button>
         <div class="dropdown-menu dropdown-menu-right">
-          <div class="container-fluid text-center">
-            <span class="text-dark">{{ email }}</span>
-          </div>
+          <h6 class="dropdown-header">Signed in as</h6>
+          <a class="dropdown-item text-dark disabled"><span class="text-dark"><strong>{{ email }}</strong></span></a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item text-dark pointer">Profile</a>
+          <a class="dropdown-item text-dark pointer">Your Profile</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item text-dark pointer">Help</a>
           <a class="dropdown-item text-dark pointer">Settings</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item text-dark pointer" (click)="logout()">Logout</a>
+          <a class="dropdown-item text-dark pointer" (click)="logout()">Sign out</a>
         </div>
       </div>
     </nav>

@@ -18,6 +18,7 @@ import { DashboardComponent } from './views/users/dashboard/dashboard.component'
 import { DashUsersComponent } from './views/users/dashboard/components/dash-users/dash-users.component';
 import { DashPatientsComponent } from './views/users/dashboard/components/dash-patients/dash-patients.component';
 import { DashLocationsComponent } from './views/users/dashboard/components/dash-locations/dash-locations.component';
+import { DashEquipamentsComponent } from './views/users/dashboard/components/dash-equipaments/dash-equipaments.component';
 import { DashFooterComponent } from './views/users/dashboard/components/dash-footer/dash-footer.component';
 import { PreloadingComponent } from './views/shared/components/preloading/preloading.component';
 import { PageNotFoundComponent } from './views/errors/page-not-found/page-not-found.component';
@@ -35,6 +36,7 @@ import { AuthGuard } from './core/auth.guard';
 import { UserFilterPipe } from './shared/pipes/user-filter.pipe';
 import { PatientFilterPipe } from './shared/pipes/patient-filter.pipe';
 import { LocationFilterPipe } from './shared/pipes/location-filter.pipe';
+import { EquipamentFilterPipe } from './shared/pipes/equipament-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { LocationFilterPipe } from './shared/pipes/location-filter.pipe';
     UserFilterPipe,
     PatientFilterPipe,
     LocationFilterPipe,
-    DashLocationsComponent
+    DashLocationsComponent,
+    EquipamentFilterPipe,
+    DashEquipamentsComponent
   ],
   imports: [
     BrowserModule,
