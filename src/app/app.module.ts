@@ -17,6 +17,7 @@ import { LoginComponent } from './views/users/login/login.component';
 import { DashboardComponent } from './views/users/dashboard/dashboard.component';
 import { DashUsersComponent } from './views/users/dashboard/components/dash-users/dash-users.component';
 import { DashPatientsComponent } from './views/users/dashboard/components/dash-patients/dash-patients.component';
+import { DashLocationsComponent } from './views/users/dashboard/components/dash-locations/dash-locations.component';
 import { DashFooterComponent } from './views/users/dashboard/components/dash-footer/dash-footer.component';
 import { PreloadingComponent } from './views/shared/components/preloading/preloading.component';
 import { PageNotFoundComponent } from './views/errors/page-not-found/page-not-found.component';
@@ -33,7 +34,7 @@ import { AuthGuard } from './core/auth.guard';
 // Pipes
 import { UserFilterPipe } from './shared/pipes/user-filter.pipe';
 import { PatientFilterPipe } from './shared/pipes/patient-filter.pipe';
-
+import { LocationFilterPipe } from './shared/pipes/location-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,9 @@ import { PatientFilterPipe } from './shared/pipes/patient-filter.pipe';
     DashFooterComponent,
     DashUsersComponent,
     UserFilterPipe,
-    PatientFilterPipe
+    PatientFilterPipe,
+    LocationFilterPipe,
+    DashLocationsComponent
   ],
   imports: [
     BrowserModule,

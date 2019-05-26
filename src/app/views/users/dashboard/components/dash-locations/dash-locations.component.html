@@ -4,11 +4,11 @@
       <div class="row h-100 align-items-center mx-5">
         <div class="col-12 my-5 text-center">
           <div class="container text-center">
-            <i class="fas fa-user-injured fa-5x fa-fw"></i>
-            <h4 class="card-title font-weight-light pt-3">Patients Data</h4>
+            <i class="fas fa-map-marker-alt fa-5x fa-fw"></i>
+            <h4 class="card-title font-weight-light pt-3">Locations Data</h4>
             <button type="button" class="btn btn-primary mx-auto mt-2 w-50" data-toggle="modal"
-              data-target="#addPatientModal"><i class="fas fa-user-injured fa-fw"></i>&nbsp;&nbsp;Register
-              Patient</button>
+              data-target="#addLocationModal"><i class="fas fa-map-marker-alt fa-fw"></i>&nbsp;&nbsp;Register
+              Location</button>
           </div>
           <!-- Advance Search -->
           <div class="container-fluid align-items-center">
@@ -31,20 +31,21 @@
                       </select>
                     </div>
                     <div class="form-group col-md-2">
-                      <button type="submit" class="btn btn-primary btn-block" (click)="onReadPatient(searchForm)">Find
-                        patient</button>
+                      <button type="submit" class="btn btn-primary btn-block" (click)="onReadLocation(searchForm)">Find
+                        location</button>
                     </div>
                     <div class="col-md-2">
-                      <button type="button" class="btn btn-outline-success btn-block" (click)="syncPatients()">
-                        <i class="fas fa-sync-alt"></i>&nbsp;Sync Patients</button>
+                      <button type="button" class="btn btn-outline-success btn-block" (click)="syncLocations()">
+                        <i class="fas fa-sync-alt"></i>&nbsp;Sync Locations</button>
                     </div>
                   </div>
                 </form>
+
               </div>
             </div>
           </div>
           <!-- Advance Search -->
-          <!-- Search Patients - Pipe -->
+          <!-- Search Locations - Pipe -->
           <div class="container-fluid mx-auto my-3">
             <form #filterForm="ngForm">
               <div class="form-row">
@@ -55,40 +56,30 @@
               </div>
             </form>
           </div>
-          <!-- Search Patients - Pipe -->
-          <!-- Patients Data Table -->
+          <!-- Search Locations - Pipe -->
+          <!-- Locations Data Table -->
           <div class="table-responsive">
             <table class="table table-hover">
               <thead class="thead-light">
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">UID</th>
-                  <th scope="col">DNI</th>
-                  <th scope="col">CIP</th>
                   <th scope="col">NAME</th>
-                  <th scope="col">LASTNAME</th>
-                  <th scope="col">LOCATION</th>
-                  <th scope="col">STATUS</th>
                   <th scope="col">OPERATIONS</th>
                 </tr>
               </thead>
               <tbody class="bg-white">
-                <tr *ngFor="let patient of patients | patientFilter:searchTerm; let i = index">
+                <tr *ngFor="let location of locations | locationFilter:searchTerm; let i = index">
                   <td>{{ i+1 }}</td>
-                  <td>{{ patient.uid }}</td>
-                  <td>{{ patient.dni }}</td>
-                  <td>{{ patient.cip }}</td>
-                  <td>{{ patient.name }}</td>
-                  <td>{{ patient.lastName }}</td>
-                  <td>{{ patient.location }}</td>
-                  <td>{{ patient.status }}</td>
+                  <td>{{ location.uid }}</td>
+                  <td>{{ location.name }}</td>
                   <td>
                     <button type="button" class="btn btn-info btn-sm mr-1" data-toggle="modal"
-                      data-target="#updateModal" (click)="selectPatient(patient)">
+                      data-target="#updateModal" (click)="selectLocation(location)">
                       <i class="fas fa-edit fa-fw"></i>
                     </button>
                     <button type="button" class="btn btn-danger btn-sm ml-1" data-toggle="modal"
-                      data-target="#deleteModal" (click)="selectPatient(patient)">
+                      data-target="#deleteModal" (click)="selectLocation(location)">
                       <i class="fas fa-trash fa-fw"></i>
                     </button>
                   </td>
@@ -96,65 +87,37 @@
               </tbody>
             </table>
           </div>
-          <!-- Patients Data Table -->
+          <!-- Locations Data Table -->
         </div>
       </div>
     </div>
   </article>
 </section>
-<!-- Add Patient - Modal -->
-<div class="modal fade" id="addPatientModal" tabindex="-1" role="dialog" aria-labelledby="addPatientModalTitle"
+<!-- Add Location - Modal -->
+<div class="modal fade" id="addLocationModal" tabindex="-1" role="dialog" aria-labelledby="addLocationModalTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content bg-transparent">
-      <form #patientAddForm="ngForm">
+      <form #locationAddForm="ngForm">
         <div class="modal-header bg-primary text-white">
           <i class="fas fa-user-edit fa-2x ml-1"></i>
-          <h5 class="modal-title ml-2" id="addPatientModalTitle">Register patient</h5>
+          <h5 class="modal-title ml-2" id="addLocationModalTitle">Register location</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span class="text-white" aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body bg-light">
           <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="dni"> Dni </label>
-              <input type="text" name="dni" class="form-control" [(ngModel)]="dni">
-            </div>
-            <div class="form-group col-md-6">
-              <label for="cip"> Cip </label>
-              <input type="text" name="cip" class="form-control" [(ngModel)]="cip">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
               <label for="name"> Name </label>
               <input type="text" name="name" class="form-control" [(ngModel)]="name">
-            </div>
-            <div class="form-group col-md-6">
-              <label for="lastName"> Lastname </label>
-              <input type="text" name="lastName" class="form-control" [(ngModel)]="lastName">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="location"> location </label>
-              <select class="form-control" name="location" ngModel>
-                <option *ngFor="let location of locations">{{ location }}</option>
-              </select>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="status"> Status </label>
-              <select class="form-control" name="status" ngModel>
-                <option *ngFor="let status of statuses">{{ status }}</option>
-              </select>
             </div>
           </div>
         </div>
         <div class="modal-footer bg-light">
-          <button type="button" class="btn btn-secondary" (click)="resetForm(patientAddForm)"
+          <button type="button" class="btn btn-secondary" (click)="resetForm(locationAddForm)"
             data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" (click)="onCreatePatient(patientAddForm)"
+          <button type="button" class="btn btn-primary" (click)="onCreateLocation(locationAddForm)"
             data-dismiss="modal">Save
             changes</button>
         </div>
@@ -163,58 +126,30 @@
   </div>
 </div>
 <!-- Update Modal -->
-<div *ngIf="selectPatient" class="modal fade" id="updateModal" tabindex="-1" role="dialog"
+<div *ngIf="selectLocation" class="modal fade" id="updateModal" tabindex="-1" role="dialog"
   aria-labelledby="updateModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content bg-transparent">
-      <form #patientUpdateForm="ngForm">
+      <form #locationUpdateForm="ngForm">
         <div class="modal-header bg-info text-white">
           <i class="fas fa-edit fa-2x ml-1"></i>
-          <h5 class="modal-title ml-2" id="updateModalTitle">Update patient data</h5>
+          <h5 class="modal-title ml-2" id="updateModalTitle">Update location data</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span class="text-white" aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body bg-light">
           <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="dni"> Dni </label>
-              <input type="text" name="dni" class="form-control" [(ngModel)]="this.ps.selectedPatient.dni">
-            </div>
-            <div class="form-group col-md-6">
-              <label for="cip"> Cip </label>
-              <input type="text" name="cip" class="form-control" [(ngModel)]="this.ps.selectedPatient.cip">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
               <label for="name"> Name </label>
-              <input type="text" name="name" class="form-control" [(ngModel)]="this.ps.selectedPatient.name">
-            </div>
-            <div class="form-group col-md-6">
-              <label for="lastName"> Lastname </label>
-              <input type="text" name="lastName" class="form-control" [(ngModel)]="this.ps.selectedPatient.lastName">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="location"> Location </label>
-              <select class="form-control" name="location" [(ngModel)]="this.ps.selectedPatient.location">
-                <option *ngFor="let location of locations">{{ location }}</option>
-              </select>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="status"> Status </label>
-              <select class="form-control" name="status" [(ngModel)]="this.ps.selectedPatient.status">
-                <option *ngFor="let status of statuses">{{ status }}</option>
-              </select>
+              <input type="text" name="name" class="form-control" [(ngModel)]="this.ls.selectedLocation.name">
             </div>
           </div>
         </div>
         <div class="modal-footer bg-light">
-          <button type="button" class="btn btn-secondary" (click)="resetForm(patientUpdateForm)"
+          <button type="button" class="btn btn-secondary" (click)="resetForm(locationUpdateForm)"
             data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-info" (click)="onUpdatePatient(patientUpdateForm)"
+          <button type="button" class="btn btn-info" (click)="onUpdateLocation(locationUpdateForm)"
             data-dismiss="modal">Save
             changes</button>
         </div>
@@ -222,8 +157,8 @@
     </div>
   </div>
 </div>
-<!-- Delete Patient - Modal -->
-<div *ngIf="selectedPatient" class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+<!-- Delete Location - Modal -->
+<div *ngIf="selectedLocation" class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
   aria-labelledby="deleteModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content bg-transparent">
@@ -236,16 +171,16 @@
       </div>
       <div class="modal-body bg-light">
         <div class="container-fluid text-center mt-2 mb-2">
-          <p>Are you sure you want to delete<strong class="text-danger">"{{ selectedPatient.name }}"</strong> profile?
+          <p>Are you sure you want to delete<strong class="text-danger">"{{ selectedLocation.name }}"</strong> profile?
           </p>
-          <p>All information associated to this patient profile will be permanently deleted.<br>
+          <p>All information associated to this location profile will be permanently deleted.<br>
             <strong class="text-danger">This operation can not be undone.</strong></p>
         </div>
       </div>
       <div class="modal-footer bg-light">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal"
-          (click)="onDeletePatient(selectedPatient)">Delete</button>
+          (click)="onDeleteLocation(selectedLocation)">Delete</button>
       </div>
     </div>
   </div>

@@ -33,7 +33,7 @@ export class DashUsersComponent implements OnInit {
     },
     'name': { 'required': 'Name is required.' },
     'lastName': { 'required': 'Lastname is required.' },
-    'unit': { 'required': 'Unit is required.' }
+    'location': { 'required': 'Location is required.' }
   };
 
   constructor(private us: UsersService, private fb: FormBuilder) {
@@ -45,9 +45,16 @@ export class DashUsersComponent implements OnInit {
   user: User
   selectedUser: User
 
-  headElements: string[] = ['#', 'UID', 'EMAIL', 'NAME', 'LASTNAME', 'UNIT', 'ADMIN']
   roles: string[] = ['Administrador', 'User']
-  units: string[] = ['Unit 01', 'Unit 02', 'Unit 03', 'Unit 04', 'Unit 05']
+  locations: any = ['Unit 01', 'Unit 02', 'Unit 03', 'Unit 04', 'Unit 05']  // TODO: Add location by firebase document
+  searchOptions: any = [
+    { text: 'Uid', value: '0' },
+    { text: 'Email', value: '1' },
+    { text: 'Name', value: '2' },
+    { text: 'Lastname', value: '3' },
+    { text: 'Location', value: '4' },
+    { text: 'Rol', value: '5' }
+  ]
   showPass: boolean
 
   spinIcon: boolean
@@ -64,7 +71,7 @@ export class DashUsersComponent implements OnInit {
       this.userForm.value['password'],
       this.userForm.value['name'],
       this.userForm.value['lastName'],
-      this.userForm.value['unit'],
+      this.userForm.value['location'],
       this.userForm.value['rol'])
   }
 
@@ -74,7 +81,7 @@ export class DashUsersComponent implements OnInit {
   }
 
   onReadUser(form: NgForm): void {
-    switch (form.value.searchOption) {
+    switch (form.value.searchOption.value) {
       case "0": { // By uid
         this.users = this.us.getUserByUID_V2(form.value.searchField)
         break;
@@ -91,17 +98,12 @@ export class DashUsersComponent implements OnInit {
         this.users = this.us.getUserByLastName(form.value.searchField)
         break;
       }
-      case "4": { // By unit
-        this.users = this.us.getUserByUnit(form.value.searchField)
+      case "4": { // By location
+        this.users = this.us.getUserByLocation(form.value.searchField)
         break;
       }
       case "5": { // By rol
         this.users = this.us.getUserByRol(form.value.searchField)
-        break;
-      }
-      case "6": { // Show all users
-        // this.users = this.us.getAllUsers()
-        this.users = this.allUsers
         break;
       }
       default: { // Invalid option 
@@ -111,6 +113,7 @@ export class DashUsersComponent implements OnInit {
     }
   }
 
+
   onUpdateUser(form: NgForm): void {
     let updatedUser: User = {
       uid: this.selectedUser.uid,
@@ -118,7 +121,7 @@ export class DashUsersComponent implements OnInit {
       password: form.value.userPassword,
       name: form.value.userName,
       lastName: form.value.userLastName,
-      unit: form.value.userUnit,
+      location: form.value.userLocation,
       rol: form.value.userRol,
     }
     this.us.updateUser(updatedUser)
@@ -154,13 +157,13 @@ export class DashUsersComponent implements OnInit {
       'lastName': ['', [
         Validators.required
       ]],
-      'unit': ['', [
+      'location': ['', [
         Validators.required
       ]],
       'rol': ''
     });
     this.userForm.controls['rol'].setValue(this.roles[1], { onlySelf: true });
-    this.userForm.controls['unit'].setValue(this.units[0], { onlySelf: true });
+    this.userForm.controls['location'].setValue(this.locations[0], { onlySelf: true });
     this.userForm.valueChanges.subscribe((data) => this.onValueChanged(data));
     this.onValueChanged();
   }

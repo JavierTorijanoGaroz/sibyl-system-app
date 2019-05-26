@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { PatientsService } from 'src/app/core/patients.service';
+import { LocationsService } from 'src/app/core/locations.service';
 import { Patient } from '../../../../../core/patient.model';
 import { Observable } from 'rxjs';
 
@@ -11,22 +12,23 @@ import { Observable } from 'rxjs';
 })
 export class DashPatientsComponent implements OnInit {
 
-  constructor(private ps: PatientsService) { }
+  constructor(private ps: PatientsService,private ls: LocationsService) { }
 
   patients: Patient[]
   allPatients: Patient[]
   patient: Patient
   selectedPatient: Patient
 
-  units: any = ['Unit 01', 'Unit 02', 'Unit 03', 'Unit 04', 'Unit 05']
-  statuses: any = ['Status A', 'Status B', 'Status C']
+  locations: any = ['Unit 01', 'Unit 02', 'Unit 03', 'Unit 04', 'Unit 05']  // TODO: Add location by firebase document
+  statuses: any = ['Admitted ', 'Transferred', 'Discharged']
+  
   searchOptions: any = [
     { text: 'Uid', value: '0' },
     { text: 'Dni', value: '1' },
     { text: 'Cip', value: '2' },
     { text: 'Name', value: '3' },
     { text: 'Lastname', value: '4' },
-    { text: 'Unit', value: '5' },
+    { text: 'Location', value: '5' },
     { text: 'Status', value: '6' }
   ]
 
@@ -46,7 +48,7 @@ export class DashPatientsComponent implements OnInit {
       cip: form.value.cip,
       name: form.value.name,
       lastName: form.value.lastName,
-      unit: form.value.unit,
+      location: form.value.location,
       status: form.value.status,
     }
     this.ps.createPatient(newPatient)
@@ -85,8 +87,8 @@ export class DashPatientsComponent implements OnInit {
         })
         break;
       }
-      case "5": { // By unit
-        this.ps.getPatientByUnit(form.value.searchField).subscribe(patients => {
+      case "5": { // By location
+        this.ps.getPatientByLocation(form.value.searchField).subscribe(patients => {
           this.patients = patients
         })
         break;
@@ -111,7 +113,7 @@ export class DashPatientsComponent implements OnInit {
       cip: form.value.cip,
       name: form.value.name,
       lastName: form.value.lastName,
-      unit: form.value.unit,
+      location: form.value.location,
       status: form.value.status,
     }
     this.ps.updatePatient(updatedPatient)
@@ -128,13 +130,9 @@ export class DashPatientsComponent implements OnInit {
 
   syncPatients(): void {
     this.patients = this.allPatients
-    console.log('Sync Users')
   }
 
   resetForm(form: NgForm): void {
     form.resetForm()
   }
-
-
-
 }
