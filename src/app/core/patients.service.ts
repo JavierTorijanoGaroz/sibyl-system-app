@@ -103,7 +103,7 @@ export class PatientsService {
     return this.patients = this.patientsCollection.valueChanges()
   }
 
-    /**
+  /**
    * Get a patient by Lastname
    * 
    * @param patientLastName The patient's lastname
