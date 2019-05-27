@@ -62,7 +62,7 @@ export class AuthService {
       }).catch(error => this.handleError(error));
   }
 
-  emailSignUpAdmin(email: string, password: string, name: string, lastName: string, unit: string, rol: string) {
+  emailSignUpAdmin(email: string, password: string, name: string, lastName: string, location: string, rol: string) {
     admin.auth().createUserWithEmailAndPassword(email, password).
       then(user => {
         const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.user.uid}`);
@@ -72,7 +72,7 @@ export class AuthService {
           password: password,
           name: name,
           lastName: lastName,
-          unit: unit,
+          location: location,
           rol: rol
         }
         console.log("User " + user.user.uid + " created successfully!");
@@ -136,8 +136,8 @@ export class AuthService {
       name: user.name,
       password: 'Password',
       lastName: 'Lastname',
-      unit: 'Unidad',
-      rol: 'Administrador'
+      location: 'Location',
+      rol: 'Rol'
     }
     return userRef.set(data)
   }
