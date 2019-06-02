@@ -43,7 +43,7 @@ export class DashPatientsComponent implements OnInit {
       data.forEach(element => {
         this.locations.push(element.name)
       });
-      this.statuses = ['Admitted ', 'Transferred', 'Discharged']
+      this.statuses = ['Admitted', 'Transferred', 'Discharged']
     })
     await this.ps.getAllPatients().subscribe(patients => {
       this.patients = patients
@@ -73,7 +73,7 @@ export class DashPatientsComponent implements OnInit {
     if (form.value.status == 'Admitted') {
       newPatient.admissionDate = currentDate
     }
-    else if (form.value.status == 'Discharged') {   
+    else if (form.value.status == 'Discharged') {
       newPatient.dischargeDate = currentDate
     }
 

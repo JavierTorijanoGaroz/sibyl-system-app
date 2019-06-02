@@ -121,40 +121,42 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="dni"> Dni </label>
-              <input type="text" name="dni" class="form-control" [(ngModel)]="dni">
+              <input type="text" name="dni" class="form-control" [(ngModel)]="dni" placeholder="Enter dni...">
             </div>
             <div class="form-group col-md-6">
               <label for="cip"> Cip </label>
-              <input type="text" name="cip" class="form-control" [(ngModel)]="cip">
+              <input type="text" name="cip" class="form-control" [(ngModel)]="cip" placeholder="Enter cip...">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-4">
               <label for="name"> Name </label>
-              <input type="text" name="name" class="form-control" [(ngModel)]="name">
+              <input type="text" name="name" class="form-control" [(ngModel)]="name" placeholder="Enter name...">
             </div>
             <div class="form-group col-md-4">
               <label for="lastName1"> First Lastname </label>
-              <input type="text" name="lastName1" class="form-control" [(ngModel)]="lastName1">
+              <input type="text" name="lastName1" class="form-control" [(ngModel)]="lastName1"
+                placeholder="Enter first lastname...">
             </div>
             <div class="form-group col-md-4">
               <label for="lastName2"> Second Lastname </label>
-              <input type="text" name="lastName2" class="form-control" [(ngModel)]="lastName2">
+              <input type="text" name="lastName2" class="form-control" [(ngModel)]="lastName2"
+                placeholder="Enter second lastname...">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="location"> Location </label>
               <select class="custom-select form-control" name="location" [(ngModel)]="defaultLocationOpt">
-                <option value="" disabled selected hidden>Select location...</option>
-                <option *ngFor="let location of locations">{{ location }}</option>
+                <option disabled selected hidden>Select location...</option>
+                <option *ngFor="let location of locations" [ngValue]="location">{{ location }}</option>
               </select>
             </div>
             <div class="form-group col-md-6">
               <label for="status"> Status </label>
               <select class="custom-select form-control" name="status" [(ngModel)]="defaultStatusOpt">
-                <option value="" disabled selected hidden>Select status...</option>
-                <option *ngFor="let status of statuses">{{ status }}</option>
+                <option disabled selected hidden>Select status...</option>
+                <option *ngFor="let status of statuses" [ngValue]="status">{{ status }}</option>
               </select>
             </div>
           </div>
@@ -225,11 +227,13 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="admissionDate"> Admission Date </label>
-              <input type="text" name="admissionDate" class="form-control" [(ngModel)]="this.ps.selectedPatient.admissionDate" readonly>
+              <input type="text" name="admissionDate" class="form-control"
+                [(ngModel)]="this.ps.selectedPatient.admissionDate" readonly>
             </div>
             <div class="form-group col-md-6">
-                <label for="dischargeDate"> Discharge Date </label>
-                <input type="text" name="dischargeDate" class="form-control" [(ngModel)]="this.ps.selectedPatient.dischargeDate" readonly>
+              <label for="dischargeDate"> Discharge Date </label>
+              <input type="text" name="dischargeDate" class="form-control"
+                [(ngModel)]="this.ps.selectedPatient.dischargeDate" readonly>
             </div>
           </div>
         </div>

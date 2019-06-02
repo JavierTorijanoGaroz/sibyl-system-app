@@ -130,7 +130,6 @@ export class DashUsersComponent implements OnInit {
 
   syncUsers(): void {
     this.users = this.allUsers
-    console.log('Sync Users')
   }
 
   resetForm(form: NgForm): void {
