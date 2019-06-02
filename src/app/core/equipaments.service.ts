@@ -79,13 +79,25 @@ export class EquipamentsService {
   }
 
   /**
-   * Get a equipament by Name
+   * Get a equipament by Manufacturer
    * 
-   * @param equipamentName The equipament's name
+   * @param equipamentManufacturer The equipament's manufacturer
    */
-  getEquipamentByName(equipamentName: string) {
+  getEquipamentByManufacturer(equipamentManufacturer: string) {
     this.equipamentsCollection = this.afs.collection<Equipament>('equipaments', ref => {
-      return ref.where('name', '==', equipamentName)
+      return ref.where('manufacturer', '==', equipamentManufacturer)
+    })
+    return this.equipaments = this.equipamentsCollection.valueChanges()
+  }
+
+  /**
+   * Get a equipament by Model
+   * 
+   * @param equipamentModel The equipament's model
+   */
+  getEquipamentByModel(equipamentModel: string) {
+    this.equipamentsCollection = this.afs.collection<Equipament>('equipaments', ref => {
+      return ref.where('model', '==', equipamentModel)
     })
     return this.equipaments = this.equipamentsCollection.valueChanges()
   }

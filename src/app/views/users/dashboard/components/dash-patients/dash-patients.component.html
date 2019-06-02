@@ -26,7 +26,7 @@
                     </div>
                     <div class="form-group col-md-3">
                       <select class="custom-select form-control" name="searchOption" ngModel>
-                        <option value="" disabled>Choose search criteria...</option>
+                        <option value="" disabled selected hidden>Choose search criteria...</option>
                         <option *ngFor="let option of searchOptions" [ngValue]="option">{{ option.text }}</option>
                       </select>
                     </div>
@@ -62,11 +62,12 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">UID</th>
+                  <!-- <th scope="col">UID</th> -->
                   <th scope="col">DNI</th>
                   <th scope="col">CIP</th>
                   <th scope="col">NAME</th>
                   <th scope="col">LASTNAME</th>
+                  <!-- <th scope="col">LASTNAME</th> -->
                   <th scope="col">LOCATION</th>
                   <th scope="col">STATUS</th>
                   <th scope="col">OPERATIONS</th>
@@ -75,11 +76,12 @@
               <tbody class="bg-white">
                 <tr *ngFor="let patient of patients | patientFilter:searchTerm; let i = index">
                   <td>{{ i+1 }}</td>
-                  <td>{{ patient.uid }}</td>
+                  <!-- <td>{{ patient.uid }}</td> -->
                   <td>{{ patient.dni }}</td>
                   <td>{{ patient.cip }}</td>
                   <td>{{ patient.name }}</td>
-                  <td>{{ patient.lastName }}</td>
+                  <td>{{ patient.lastName1 }}</td>
+                  <!-- <td>{{ patient.lastName2 }}</td> -->
                   <td>{{ patient.location }}</td>
                   <td>{{ patient.status }}</td>
                   <td>
@@ -119,34 +121,42 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="dni"> Dni </label>
-              <input type="text" name="dni" class="form-control" [(ngModel)]="dni">
+              <input type="text" name="dni" class="form-control" [(ngModel)]="dni" placeholder="Enter dni...">
             </div>
             <div class="form-group col-md-6">
               <label for="cip"> Cip </label>
-              <input type="text" name="cip" class="form-control" [(ngModel)]="cip">
+              <input type="text" name="cip" class="form-control" [(ngModel)]="cip" placeholder="Enter cip...">
             </div>
           </div>
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label for="name"> Name </label>
-              <input type="text" name="name" class="form-control" [(ngModel)]="name">
+              <input type="text" name="name" class="form-control" [(ngModel)]="name" placeholder="Enter name...">
             </div>
-            <div class="form-group col-md-6">
-              <label for="lastName"> Lastname </label>
-              <input type="text" name="lastName" class="form-control" [(ngModel)]="lastName">
+            <div class="form-group col-md-4">
+              <label for="lastName1"> First Lastname </label>
+              <input type="text" name="lastName1" class="form-control" [(ngModel)]="lastName1"
+                placeholder="Enter first lastname...">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="lastName2"> Second Lastname </label>
+              <input type="text" name="lastName2" class="form-control" [(ngModel)]="lastName2"
+                placeholder="Enter second lastname...">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="location"> location </label>
-              <select class="form-control" name="location" ngModel>
-                <option *ngFor="let location of locations">{{ location }}</option>
+              <label for="location"> Location </label>
+              <select class="custom-select form-control" name="location" [(ngModel)]="defaultLocationOpt">
+                <option disabled selected hidden>Select location...</option>
+                <option *ngFor="let location of locations" [ngValue]="location">{{ location }}</option>
               </select>
             </div>
             <div class="form-group col-md-6">
               <label for="status"> Status </label>
-              <select class="form-control" name="status" ngModel>
-                <option *ngFor="let status of statuses">{{ status }}</option>
+              <select class="custom-select form-control" name="status" [(ngModel)]="defaultStatusOpt">
+                <option disabled selected hidden>Select status...</option>
+                <option *ngFor="let status of statuses" [ngValue]="status">{{ status }}</option>
               </select>
             </div>
           </div>
@@ -187,27 +197,55 @@
             </div>
           </div>
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label for="name"> Name </label>
               <input type="text" name="name" class="form-control" [(ngModel)]="this.ps.selectedPatient.name">
             </div>
-            <div class="form-group col-md-6">
-              <label for="lastName"> Lastname </label>
-              <input type="text" name="lastName" class="form-control" [(ngModel)]="this.ps.selectedPatient.lastName">
+            <div class="form-group col-md-4">
+              <label for="lastName1"> First Lastname </label>
+              <input type="text" name="lastName1" class="form-control" [(ngModel)]="this.ps.selectedPatient.lastName1">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="lastName2"> Second Lastname </label>
+              <input type="text" name="lastName2" class="form-control" [(ngModel)]="this.ps.selectedPatient.lastName2">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="location"> Location </label>
-              <select class="form-control" name="location" [(ngModel)]="this.ps.selectedPatient.location">
+              <select class="custom-select form-control" name="location" [(ngModel)]="this.ps.selectedPatient.location">
                 <option *ngFor="let location of locations">{{ location }}</option>
               </select>
             </div>
             <div class="form-group col-md-6">
               <label for="status"> Status </label>
-              <select class="form-control" name="status" [(ngModel)]="this.ps.selectedPatient.status">
+              <select class="custom-select form-control" name="status" [(ngModel)]="this.ps.selectedPatient.status">
                 <option *ngFor="let status of statuses">{{ status }}</option>
               </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="admissionDate"> Admission Date </label>
+              <input type="text" name="admissionDate" class="form-control"
+                [(ngModel)]="this.ps.selectedPatient.admissionDate" readonly>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="dischargeDate"> Discharge Date </label>
+              <input type="text" name="dischargeDate" class="form-control"
+                [(ngModel)]="this.ps.selectedPatient.dischargeDate" readonly>
+            </div>
+          </div>
+          <hr class="w-100">
+          <div class="form-row mt-4">
+            <div class="form-group col-md-6">
+              <button type="button" class="btn btn-outline-info btn-block" (click)="updatePersonalCode()">
+                <i class="fas fa-qrcode"></i>&nbsp;Generate New Personal Code</button>
+            </div>
+            <div class="form-group col-md-6">
+              <!-- <label for="personalCode"> Personal Code </label> -->
+              <input type="text" name="personalCode" class="form-control"
+                [(ngModel)]="this.ps.selectedPatient.personalCode" readonly>
             </div>
           </div>
         </div>

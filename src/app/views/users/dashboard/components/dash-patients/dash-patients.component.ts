@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { PatientsService } from 'src/app/core/patients.service';
+import { LocationsService } from 'src/app/core/locations.service';
 import { Patient } from 'src/app/core/patient.model';
+
+const SOURCECODE: string = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
 @Component({
   selector: 'app-dash-patients',
@@ -10,16 +13,17 @@ import { Patient } from 'src/app/core/patient.model';
 })
 export class DashPatientsComponent implements OnInit {
 
-  constructor(private ps: PatientsService) { }
+  constructor(private ps: PatientsService, private ls: LocationsService) { }
 
   patients: Patient[]
   allPatients: Patient[]
   patient: Patient
   selectedPatient: Patient
+  locations: string[] = []
+  statuses: string[] = []
+  defaultLocationOpt: string = ''
+  defaultStatusOpt: string = ''
 
-  locations: any = ['Unit 01', 'Unit 02', 'Unit 03', 'Unit 04', 'Unit 05']  // TODO: Add location by firebase document
-  statuses: any = ['Admitted ', 'Transferred', 'Discharged']
-  
   searchOptions: any = [
     { text: 'Uid', value: '0' },
     { text: 'Dni', value: '1' },
@@ -33,7 +37,17 @@ export class DashPatientsComponent implements OnInit {
   spinIcon: boolean
 
   ngOnInit() {
-    this.ps.getAllPatients().subscribe(patients => {
+    this.initData()
+  }
+
+  async initData() {
+    await this.ls.getAllLocations().subscribe(data => {
+      data.forEach(element => {
+        this.locations.push(element.name)
+      });
+      this.statuses = ['Admitted', 'Transferred', 'Discharged']
+    })
+    await this.ps.getAllPatients().subscribe(patients => {
       this.patients = patients
       this.allPatients = patients
     })
@@ -45,9 +59,22 @@ export class DashPatientsComponent implements OnInit {
       dni: form.value.dni,
       cip: form.value.cip,
       name: form.value.name,
-      lastName: form.value.lastName,
+      lastName1: form.value.lastName1,
+      lastName2: form.value.lastName2,
       location: form.value.location,
       status: form.value.status,
+      admissionDate: '',
+      dischargeDate: '',
+      personalCode: ''
+    }
+
+    if (form.value.status == 'Admitted') {
+      newPatient.admissionDate = this.getCurrentDate()
+      newPatient.personalCode = this.generatePersonalCode()
+    }
+    else if (form.value.status == 'Discharged') {
+      newPatient.dischargeDate = this.getCurrentDate()
+      newPatient.personalCode = ''
     }
     this.ps.createPatient(newPatient)
     this.resetForm(form)
@@ -110,9 +137,22 @@ export class DashPatientsComponent implements OnInit {
       dni: form.value.dni,
       cip: form.value.cip,
       name: form.value.name,
-      lastName: form.value.lastName,
+      lastName1: form.value.lastName1,
+      lastName2: form.value.lastName2,
       location: form.value.location,
       status: form.value.status,
+      admissionDate: form.value.admissionDate,
+      dischargeDate: form.value.dischargeDate,
+      personalCode: form.value.personalCode
+    }
+
+    if (form.value.status == 'Admitted') {
+      updatedPatient.admissionDate = this.getCurrentDate()
+      updatedPatient.dischargeDate = ''
+    }
+    else if (form.value.status == 'Discharged') {
+      updatedPatient.dischargeDate = this.getCurrentDate()
+      updatedPatient.personalCode = ''
     }
     this.ps.updatePatient(updatedPatient)
   }
@@ -132,5 +172,22 @@ export class DashPatientsComponent implements OnInit {
 
   resetForm(form: NgForm): void {
     form.resetForm()
+  }
+
+  getCurrentDate(): string {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0')
+    let mm = String(today.getMonth() + 1).padStart(2, '0')
+    let yyyy = today.getFullYear()
+    return mm + '/' + dd + '/' + yyyy;
+  }
+
+
+  generatePersonalCode(): string {
+    return Math.random().toString(36).substr(2, 9).toLocaleUpperCase()
+  }
+
+  updatePersonalCode(): void {
+    this.selectedPatient.personalCode = this.generatePersonalCode()
   }
 }

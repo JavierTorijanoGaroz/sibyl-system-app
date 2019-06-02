@@ -1,181 +1,106 @@
 <section>
-  <nav>
-    <div class="nav nav-pills nav-fill w-100" id="nav-tab" role="tablist">
-      <a class="nav-item nav-link text-white active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
-        aria-controls="nav-home" aria-selected="true" (click)="initComponent()">Register</a>
-      <a class="nav-item nav-link text-white" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-        aria-controls="nav-profile" aria-selected="false" (click)="initComponent()">Data</a>
-    </div>
-  </nav>
-  <div class="tab-content" id="nav-tabContent">
-    <!-- Register User Option -->
-    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-      <article class="bg-light">
-        <div class="container h-100">
-          <div class="row h-100 align-items-center">
-            <div class="col-12 my-5 text-center">
-              <div class="container text-center mb-3">
-                <i class="fas fa-user-plus fa-5x fa-fw"></i>
-                <h4 class="card-title font-weight-light pt-3">Register New User</h4>
-              </div>
-              <div class="container text-left py-2">
-                <div class="card">
-                  <article class="card-body">
-                    <form [formGroup]="userForm" (ngSubmit)="onCreateUser()">
-                      <div class="form-row">
-                        <div class="form-group col-md-6">
-                          <label for="email"> Email </label>
-                          <input type="email" id="inputEmail" formControlName="email" required
-                            autocomplete="new-password" class="form-control">
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label for="password"> Password </label>
-                          <input type="password" id="inputPassword" formControlName="password" required
-                            autocomplete="new-password" class="form-control">
-                        </div>
-                      </div>
-                      <div class="form-row">
-                        <div class="form-group col-md-6">
-                          <label for="inputAddress"> Name </label>
-                          <input type="text" class="form-control" formControlName="name" id="inputName" placeholder="">
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label for="inputAddress2"> Lastname </label>
-                          <input type="text" class="form-control" id="inputLastName" formControlName="lastName"
-                            placeholder="">
-                        </div>
-                      </div>
-                      <div class="form-row">
-                        <div class="form-group col-md-6">
-                          <label for="inputLocation"> Location </label>
-                          <select class="custom-select form-control" id="inputLocation" formControlName="location">
-                            <option *ngFor="let location of locations" [ngValue]="location">{{ location }}</option>
-                          </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label for="inputRol"> System Rol </label>
-                          <select class="custom-select form-control" id="inputRol" formControlName="rol">
-                            <option *ngFor="let rol of roles" [ngValue]="rol">{{ rol }}</option>
-                          </select>
-                        </div>
-                      </div>
-                      <hr class="rgba-white-light mx-4 my-3">
-                      <div class="form-group">
-                        <button type="submit" class="button btn btn-primary btn-block"> Register </button>
-                      </div>
-                    </form>
-                  </article>
-                </div>
-              </div>
-            </div>
+  <article class="bg-light">
+    <div class="container-fluid h-100">
+      <div class="row h-100 align-items-center mx-5">
+        <div class="col-12 my-5 text-center">
+          <div class="container text-center">
+            <i class="fas fa-users fa-5x fa-fw"></i>
+            <h4 class="card-title font-weight-light pt-3">Users Data</h4>
+            <button type="button" class="btn btn-primary mx-auto mt-2 w-50" data-toggle="modal"
+              data-target="#addUserModal"><i class="fas fa-user fa-fw"></i>&nbsp;&nbsp;Register
+              User</button>
           </div>
-        </div>
-      </article>
-    </div>
-    <!-- User Data Option -->
-    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-      <article class="bg-light">
-        <div class="container-fluid h-100">
-          <div class="row h-100 align-items-center mx-5">
-            <div class="col-12 my-5 text-center">
-              <div class="container text-center">
-                <i class="fas fa-users fa-5x fa-fw"></i>
-                <h4 class="card-title font-weight-light pt-3">Users Data</h4>
-                <button type="button" class="btn btn-primary mx-auto mt-2 w-50" data-toggle="modal"
-                  data-target="#addUserModal"><i class="fas fa-user fa-fw"></i>&nbsp;&nbsp;Register
-                  User</button>
-              </div>
-              <!-- Advance Search -->
-              <div class="container-fluid align-items-center">
-                <button class="btn btn-dark my-3 w-50" type="button" data-toggle="collapse"
-                  data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i
-                    class="fas fa-search fa-fw"></i>&nbsp;&nbsp;Advance Search</button>
-              </div>
-              <div class="collapse" id="collapseExample">
-                <div class="card card-body">
-                  <div class="container mx-auto">
-                    <form #searchForm="ngForm" class="mt-3">
-                      <div class="form-row">
-                        <div class="form-group col-md-5">
-                          <input type="text" name="searchField" class="form-control" placeholder="Search by..." ngModel>
-                        </div>
-                        <div class="form-group col-md-3">
-                          <select class="custom-select form-control" name="searchOption" ngModel>
-                            <option value="" disabled>Choose search criteria...</option>
-                            <option *ngFor="let option of searchOptions" [ngValue]="option">{{ option.text }}</option>
-                          </select>
-                        </div>
-                        <div class="form-group col-md-2">
-                          <button type="submit" class="btn btn-primary btn-block" (click)="onReadUser(searchForm)">Find
-                            User</button>
-                        </div>
-                        <div class="col-md-2">
-                          <button type="button" class="btn btn-outline-success btn-block" (click)="syncUsers()">
-                            <i class="fas fa-sync-alt"></i>&nbsp;Syncronyce</button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <!-- Advance Search -->
-              <!-- Search Users - Pipe -->
-              <div class="container mx-auto my-3">
-                <form #filterForm="ngForm">
+          <!-- Advance Search -->
+          <div class="container-fluid align-items-center">
+            <button class="btn btn-dark my-3 w-50" type="button" data-toggle="collapse" data-target="#collapseExample"
+              aria-expanded="false" aria-controls="collapseExample"><i
+                class="fas fa-search fa-fw"></i>&nbsp;&nbsp;Advance Search</button>
+          </div>
+          <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+              <div class="container mx-auto">
+                <form #searchForm="ngForm" class="mt-3">
                   <div class="form-row">
-                    <div class="form-group col-md-12">
-                      <input type="text" name="searchField" class="form-control" placeholder="Filter table..."
-                        [(ngModel)]="searchTerm">
+                    <div class="form-group col-md-5">
+                      <input type="text" name="searchField" class="form-control" placeholder="Search by..." ngModel>
+                    </div>
+                    <div class="form-group col-md-3">
+                      <select class="custom-select form-control" name="searchOption" ngModel>
+                        <option value="" disabled selected hidden>Choose search criteria...</option>
+                        <option *ngFor="let option of searchOptions" [ngValue]="option">{{ option.text }}</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                      <button type="submit" class="btn btn-primary btn-block" (click)="onReadUser(searchForm)">Find
+                        User</button>
+                    </div>
+                    <div class="col-md-2">
+                      <button type="button" class="btn btn-outline-success btn-block" (click)="syncUsers()">
+                        <i class="fas fa-sync-alt"></i>&nbsp;Syncronyce</button>
                     </div>
                   </div>
                 </form>
               </div>
-              <!-- Search Users - Pipe -->
-              <!-- User Data Table -->
-              <div class="table-responsive">
-                <table class="table table-hover">
-                  <thead class="thead-light">
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">UID</th>
-                      <th scope="col">EMAIL</th>
-                      <th scope="col">NAME</th>
-                      <th scope="col">LASTNAME</th>
-                      <th scope="col">LOCATION</th>
-                      <th scope="col">ROL</th>
-                      <th scope="col">OPERATIONS</th>
-                    </tr>
-                  </thead>
-                  <tbody class="bg-white">
-                    <tr *ngFor="let user of users | async | userFilter:searchTerm; let i = index">
-                      <td>{{ i+1 }}</td>
-                      <td>{{ user.uid }}</td>
-                      <td>{{ user.email }}</td>
-                      <td>{{ user.name }}</td>
-                      <td>{{ user.lastName }}</td>
-                      <td>{{ user.location }}</td>
-                      <td>{{ user.rol }}</td>
-                      <td>
-                        <button type="button" class="btn btn-info btn-sm mr-1" data-toggle="modal"
-                          data-target="#updateModal" (click)="selectUser(user)">
-                          <i class="fas fa-edit fa-fw"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger btn-sm ml-1" data-toggle="modal"
-                          data-target="#deleteModal" (click)="selectUser(user)">
-                          <i class="fas fa-trash fa-fw"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <!-- User Data Table -->
             </div>
           </div>
+          <!-- Advance Search -->
+          <!-- Search Users - Pipe -->
+          <div class="container mx-auto my-3">
+            <form #filterForm="ngForm">
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <input type="text" name="searchField" class="form-control" placeholder="Filter table..."
+                    [(ngModel)]="searchTerm">
+                </div>
+              </div>
+            </form>
+          </div>
+          <!-- Search Users - Pipe -->
+          <!-- User Data Table -->
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <!-- <th scope="col">UID</th> -->
+                  <th scope="col">EMAIL</th>
+                  <th scope="col">NAME</th>
+                  <th scope="col">LASTNAME</th>
+                  <!-- <th scope="col">LASTNAME</th> -->
+                  <th scope="col">LOCATION</th>
+                  <th scope="col">ROL</th>
+                  <th scope="col">OPERATIONS</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white">
+                <tr *ngFor="let user of users | async | userFilter:searchTerm; let i = index">
+                  <td>{{ i+1 }}</td>
+                  <!-- <td>{{ user.uid }}</td> -->
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.lastName1 }}</td>
+                  <!-- <td>{{ user.lastName2 }}</td> -->
+                  <td>{{ user.location }}</td>
+                  <td>{{ user.rol }}</td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-sm mr-1" data-toggle="modal"
+                      data-target="#updateModal" (click)="selectUser(user)">
+                      <i class="fas fa-edit fa-fw"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm ml-1" data-toggle="modal"
+                      data-target="#deleteModal" (click)="selectUser(user)">
+                      <i class="fas fa-trash fa-fw"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- User Data Table -->
         </div>
-      </article>
+      </div>
     </div>
-  </div>
+  </article>
 </section>
 <!-- Add User - Modal -->
 <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalTitle"
@@ -184,8 +109,8 @@
     <div class="modal-content bg-transparent">
       <form #userAddForm="ngForm">
         <div class="modal-header bg-primary text-white">
-          <i class="fas fa-user-edit fa-2x ml-1"></i>
-          <h5 class="modal-title ml-2" id="addUserModalTitle">Register user</h5>
+          <i class="fas fa-user fa-2x ml-1"></i>
+          <h5 class="modal-title ml-2" id="updateModalTitle">Register user</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span class="text-white" aria-hidden="true">&times;</span>
           </button>
@@ -193,35 +118,55 @@
         <div class="modal-body bg-light">
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="dni"> Dni </label>
-              <input type="text" name="dni" class="form-control" [(ngModel)]="dni">
+              <label for="userEmail"> Email </label>
+              <input type="email" name="userEmail" class="form-control" [(ngModel)]="email"
+                placeholder="Enter your email...">
             </div>
             <div class="form-group col-md-6">
-              <label for="cip"> Cip </label>
-              <input type="text" name="cip" class="form-control" [(ngModel)]="cip">
+              <label for="userPassword"> Password </label>
+              <div class="input-group">
+                <input type="{{ showPass ? 'text' : 'password' }}" name="userPassword" class="form-control"
+                  [(ngModel)]="password" placeholder="Enter your password...">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <a class="show-pass" (click)="showPassword()">
+                      <i class="fas fa-eye"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="userName"> Name </label>
+              <input type="text" name="userName" class="form-control" [(ngModel)]="name"
+                placeholder="Enter your name...">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="userLastName1"> First Lastname </label>
+              <input type="text" name="userLastName1" class="form-control" [(ngModel)]="lastName1"
+                placeholder="Enter first lastname...">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="userLastName2"> Second Lastname </label>
+              <input type="text" name="userLastName2" class="form-control" [(ngModel)]="lastName2"
+                placeholder="Enter second lastname...">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="name"> Name </label>
-              <input type="text" name="name" class="form-control" [(ngModel)]="name">
-            </div>
-            <div class="form-group col-md-6">
-              <label for="lastName"> Lastname </label>
-              <input type="text" name="lastName" class="form-control" [(ngModel)]="lastName">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="location"> location </label>
-              <select class="form-control" name="location" ngModel>
-                <option *ngFor="let location of locations">{{ location }}</option>
+              <label for="userLocation"> Location </label>
+              <select class="custom-select form-control" name="userLocation" [(ngModel)]="defaultLocationOpt">
+                <option disabled selected hidden>Select your location...</option>
+                <option *ngFor="let location of locations" [ngValue]="location">{{ location }}</option>
               </select>
             </div>
             <div class="form-group col-md-6">
-              <label for="status"> Status </label>
-              <select class="form-control" name="status" ngModel>
-                <option *ngFor="let status of statuses">{{ status }}</option>
+              <label for="userRol"> System Rol </label>
+              <select class="custom-select form-control" name="userRol" [(ngModel)]="defaultRolOpt">
+                <option disabled selected hidden>Select your rol...</option>
+                <option *ngFor="let rol of roles" [ngValue]="rol">{{ rol }}</option>
               </select>
             </div>
           </div>
@@ -229,8 +174,8 @@
         <div class="modal-footer bg-light">
           <button type="button" class="btn btn-secondary" (click)="resetForm(userAddForm)"
             data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" (click)="onCreateUser(userAddForm)" data-dismiss="modal">Save
-            changes</button>
+          <button type="button" class="btn btn-primary" (click)="onCreateUser(userAddForm)"
+            data-dismiss="modal">Register</button>
         </div>
       </form>
     </div>
@@ -253,13 +198,14 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="userEmail"> Email </label>
-              <input type="email" name="userEmail" class="form-control" [(ngModel)]="this.us.selectedUser.email">
+              <input type="email" name="userEmail" class="form-control" [(ngModel)]="this.us.selectedUser.email"
+                readonly>
             </div>
             <div class="form-group col-md-6">
               <label for="userPassword"> Password </label>
               <div class="input-group">
                 <input type="{{ showPass ? 'text' : 'password' }}" name="userPassword" class="form-control"
-                  [(ngModel)]="this.us.selectedUser.password">
+                  [(ngModel)]="this.us.selectedUser.password" readonly>
                 <div class="input-group-prepend">
                   <div class="input-group-text">
                     <a class="show-pass" (click)="showPassword()">
@@ -271,13 +217,17 @@
             </div>
           </div>
           <div class="form-row">
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-4">
               <label for="userName"> Name </label>
               <input type="text" name="userName" class="form-control" [(ngModel)]="this.us.selectedUser.name">
             </div>
-            <div class="form-group col-md-6">
-              <label for="userLastName"> Lastname </label>
-              <input type="text" name="userLastName" class="form-control" [(ngModel)]="this.us.selectedUser.lastName">
+            <div class="form-group col-md-4">
+              <label for="userLastName"> First Lastname </label>
+              <input type="text" name="userLastName1" class="form-control" [(ngModel)]="this.us.selectedUser.lastName1">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="userLastName"> Second Lastname </label>
+              <input type="text" name="userLastName2" class="form-control" [(ngModel)]="this.us.selectedUser.lastName2">
             </div>
           </div>
           <div class="form-row">
