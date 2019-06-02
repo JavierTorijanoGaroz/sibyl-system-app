@@ -18,6 +18,8 @@ export class LocationsService {
     uid: null
   }
 
+  allLocationsNames: string[]
+
   constructor(private afs: AngularFirestore) {
     this.locationsCollection = this.afs.collection<Location>('locations')
     this.locations = this.locationsCollection.valueChanges()

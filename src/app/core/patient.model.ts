@@ -3,7 +3,10 @@ export class Patient {
     dni?: string
     cip?: string
     name?: string
-    lastName?: string
+    lastName1?: string
+    lastName2?: string
     location?: string
     status?: string
+    admissionDate?: string
+    dischargeDate?: string
 }

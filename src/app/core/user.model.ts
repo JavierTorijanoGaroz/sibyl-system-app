@@ -3,7 +3,8 @@ export interface User {
     email?: string
     password?: string
     name?: string
-    lastName?: string
+    lastName1?: string
+    lastName2?: string
     location?: string
     rol?: string
 }

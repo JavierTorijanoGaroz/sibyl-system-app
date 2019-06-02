@@ -29,46 +29,31 @@ export class UsersService {
     uid: null
   }
 
-  /**
-   * 
-   * @param afs 
-   */
   constructor(private afs: AngularFirestore) {
     this.usersCollection = this.afs.collection<User>('users')
     this.users = this.usersCollection.valueChanges()
   }
 
-  /**
-   * 
-   * @param email 
-   * @param password 
-   * @param name 
-   * @param lastName 
-   * @param location 
-   * @param rol 
-   */
-  createUser(email: string, password: string, name: string, lastName: string, location: string, rol: string) {
+  createUser(email: string, password: string, name: string, lastName1: string, lastName2: string, location: string, rol: string) {
     auxFirebaseApp.auth().createUserWithEmailAndPassword(email, password).
       then(userCredential => {
-        console.log("User " + userCredential.user.uid + " created successfully!");
         const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${userCredential.user.uid}`);
         const userData: User = {
           uid: userCredential.user.uid,
           email: userCredential.user.email,
           password: password,
           name: name,
-          lastName: lastName,
+          lastName1: lastName1,
+          lastName2: lastName2,
           location: location,
           rol: rol
         }
         userRef.set(userData)
         auxFirebaseApp.auth().signOut();
+        console.log("User " + userCredential.user.uid + " created successfully!");
       }).catch(error => this.handleError(error))
   }
 
-/**
- * 
- */
 getAllUsers() {
      return this.users =this.usersCollection.snapshotChanges()
       .pipe(map(changes => {
@@ -80,39 +65,13 @@ getAllUsers() {
       }))
   }
 
-  /**
-   * 
-   * @param userUID 
-   */
-  getUserByUID_V1(userUID: string) {
-    this.userDoc = this.afs.doc<User>(`users/${userUID}`)
-    return this.user = this.userDoc.snapshotChanges()
-      .pipe(map(action => {
-        if (action.payload.exists === false) {
-          return null;
-        } else {
-          const data = action.payload.data() as User
-          data.uid = action.payload.id
-          return data
-        }
-      }))
-  }
-
-  /**
-   * 
-   * @param userUID 
-   */
-  getUserByUID_V2(userUID: string) {
+  getUserByUID(userUID: string) {
     this.usersCollection = this.afs.collection<User>('users', ref => {
       return ref.where('uid', '==', userUID)
     })
     return this.users = this.usersCollection.valueChanges()
   }
 
-  /**
-   * 
-   * @param userEmail 
-   */
   getUserByEmail(userEmail: string) {
     this.usersCollection = this.afs.collection<User>('users', ref => {
       return ref.where('email', '==', userEmail)
@@ -120,10 +79,6 @@ getAllUsers() {
     return this.users = this.usersCollection.valueChanges()
   }
 
-  /**
-   * 
-   * @param userName 
-   */
   getUserByName(userName: string) {
     this.usersCollection = this.afs.collection<User>('users', ref => {
       return ref.where('name', '==', userName)
@@ -131,21 +86,20 @@ getAllUsers() {
     return this.users = this.usersCollection.valueChanges()
   }
 
-  /**
-   * 
-   * @param userLastName 
-   */
-  getUserByLastName(userLastName: string) {
+  getUserByLastName1(userLastName1: string) {
     this.usersCollection = this.afs.collection<User>('users', ref => {
-      return ref.where('lastName', '==', userLastName)
+      return ref.where('lastName1', '==', userLastName1)
     })
     return this.users = this.usersCollection.valueChanges()
   }
 
-  /**
-   * 
-   * @param userLocation
-   */
+  getUserByLastName2(userLastName2: string) {
+    this.usersCollection = this.afs.collection<User>('users', ref => {
+      return ref.where('lastName2', '==', userLastName2)
+    })
+    return this.users = this.usersCollection.valueChanges()
+  }
+
   getUserByLocation(userLocation: string) {
     this.usersCollection = this.afs.collection<User>('users', ref => {
       return ref.where('location', '==', userLocation)
@@ -153,10 +107,6 @@ getAllUsers() {
     return this.users = this.usersCollection.valueChanges()
   }
 
-  /**
-   * 
-   * @param userRol 
-   */
   getUserByRol(userRol: string) {
     this.usersCollection = this.afs.collection<User>('users', ref => {
       return ref.where('rol', '==', userRol)
@@ -164,19 +114,11 @@ getAllUsers() {
     return this.users = this.usersCollection.valueChanges()
   }
 
-  /**
-   * 
-   * @param user 
-   */
   updateUser(user: User): void {
     // Update user document stored on Firestore
     this.afs.doc<User>(`users/${user.uid}`).update(user)
   }
 
-  /**
-   * 
-   * @param user 
-   */
   deleteUser(user: User): void {
     // Delete user from Firebase Authentication System
     auxFirebaseApp.auth().signInWithEmailAndPassword(user.email, user.password)
@@ -187,11 +129,6 @@ getAllUsers() {
       }).catch(error => this.handleError(error))
   }
 
-  /**
-   * If error, console log and notify user
-   * 
-   * @param error Error
-   */
   private handleError(error) {
     console.error(error)
   }

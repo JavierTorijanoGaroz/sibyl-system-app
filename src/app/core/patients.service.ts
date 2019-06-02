@@ -145,6 +145,7 @@ export class PatientsService {
    * @param patient The patient to update
    */
   updatePatient(patient: Patient): void {
+    console.log(patient)
     this.afs.doc<Patient>(`patients/${patient.uid}`).update(patient)
   }
 

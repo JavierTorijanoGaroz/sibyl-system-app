@@ -62,7 +62,7 @@ export class AuthService {
       }).catch(error => this.handleError(error));
   }
 
-  emailSignUpAdmin(email: string, password: string, name: string, lastName: string, location: string, rol: string) {
+  emailSignUpAdmin(email: string, password: string, name: string, lastName1: string, lastName2: string, location: string, rol: string) {
     admin.auth().createUserWithEmailAndPassword(email, password).
       then(user => {
         const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.user.uid}`);
@@ -71,7 +71,8 @@ export class AuthService {
           email: email,
           password: password,
           name: name,
-          lastName: lastName,
+          lastName1: lastName1,
+          lastName2: lastName2,
           location: location,
           rol: rol
         }
@@ -98,7 +99,6 @@ export class AuthService {
     }).catch(error => this.handleError(error))
   }
 
-
   /**
    * Sends email allowing user to reset password
    */
@@ -109,7 +109,6 @@ export class AuthService {
       .catch((error) => this.handleError(error))
   }
 
-
   /**
    * SignOut
    */
@@ -119,9 +118,6 @@ export class AuthService {
     });
   }
   // https://fireship.io/lessons/angularfire-google-oauth/
-
-
-
 
   /**
    * Sets user data to firestore after succesful login
@@ -135,7 +131,8 @@ export class AuthService {
       email: user.email || null,
       name: user.name,
       password: 'Password',
-      lastName: 'Lastname',
+      lastName1: 'Lastname1',
+      lastName2: 'Lastname2',
       location: 'Location',
       rol: 'Rol'
     }
@@ -151,8 +148,6 @@ export class AuthService {
     console.error(error)
     this.notify.update(error.message, 'error')
   }
-
-
 
   ////// OAuth Methods /////
   googleLogin() {
@@ -184,7 +179,6 @@ export class AuthService {
       .catch(error => this.handleError(error));
   }
 
-
   //// Anonymous Auth ////
   anonymousLogin() {
     return this.afAuth.auth.signInAnonymously()
@@ -194,7 +188,4 @@ export class AuthService {
       })
       .catch(error => this.handleError(error));
   }
-
-
-
 }
