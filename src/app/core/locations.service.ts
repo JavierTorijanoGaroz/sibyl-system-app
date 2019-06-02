@@ -68,6 +68,18 @@ export class LocationsService {
   }
 
   /**
+  * Get a location by ID
+  * 
+  * @param locationID The location's ID
+  */
+  getLocationByID(locationID: string) {
+    this.locationsCollection = this.afs.collection<Location>('locations', ref => {
+      return ref.where('id', '==', locationID)
+    })
+    return this.locations = this.locationsCollection.valueChanges()
+  }
+
+  /**
    * Get a location by Name
    * 
    * @param locationName The location's name
@@ -75,6 +87,18 @@ export class LocationsService {
   getLocationByName(locationName: string) {
     this.locationsCollection = this.afs.collection<Location>('locations', ref => {
       return ref.where('name', '==', locationName)
+    })
+    return this.locations = this.locationsCollection.valueChanges()
+  }
+
+  /**
+   * Get a location by Zone
+   * 
+   * @param locationZone The location's zone
+   */
+  getLocationByZone(locationZone: string) {
+    this.locationsCollection = this.afs.collection<Location>('locations', ref => {
+      return ref.where('zone', '==', locationZone)
     })
     return this.locations = this.locationsCollection.valueChanges()
   }
