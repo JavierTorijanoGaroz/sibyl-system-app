@@ -4,6 +4,8 @@ import { PatientsService } from 'src/app/core/patients.service';
 import { LocationsService } from 'src/app/core/locations.service';
 import { Patient } from 'src/app/core/patient.model';
 
+const SOURCECODE: string = 'abcdefghijklmnopqrstuvwxyz0123456789';
+
 @Component({
   selector: 'app-dash-patients',
   templateUrl: './dash-patients.component.html',
@@ -62,21 +64,18 @@ export class DashPatientsComponent implements OnInit {
       location: form.value.location,
       status: form.value.status,
       admissionDate: '',
-      dischargeDate: ''
+      dischargeDate: '',
+      personalCode: ''
     }
 
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0')
-    let mm = String(today.getMonth() + 1).padStart(2, '0')
-    let yyyy = today.getFullYear()
-    let currentDate = mm + '/' + dd + '/' + yyyy;
     if (form.value.status == 'Admitted') {
-      newPatient.admissionDate = currentDate
+      newPatient.admissionDate = this.getCurrentDate()
+      newPatient.personalCode = this.generatePersonalCode()
     }
     else if (form.value.status == 'Discharged') {
-      newPatient.dischargeDate = currentDate
+      newPatient.dischargeDate = this.getCurrentDate()
+      newPatient.personalCode = ''
     }
-
     this.ps.createPatient(newPatient)
     this.resetForm(form)
   }
@@ -143,20 +142,22 @@ export class DashPatientsComponent implements OnInit {
       location: form.value.location,
       status: form.value.status,
       admissionDate: form.value.admissionDate,
-      dischargeDate: form.value.dischargeDate
+      dischargeDate: form.value.dischargeDate,
+      personalCode: form.value.personalCode
     }
 
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0')
-    let mm = String(today.getMonth() + 1).padStart(2, '0')
-    let yyyy = today.getFullYear()
-    let currentDate = mm + '/' + dd + '/' + yyyy;
+    // let today = new Date();
+    // let dd = String(today.getDate()).padStart(2, '0')
+    // let mm = String(today.getMonth() + 1).padStart(2, '0')
+    // let yyyy = today.getFullYear()
+    // let currentDate = mm + '/' + dd + '/' + yyyy;
     if (form.value.status == 'Admitted') {
-      updatedPatient.admissionDate = currentDate
+      updatedPatient.admissionDate = this.getCurrentDate()
       updatedPatient.dischargeDate = ''
     }
     else if (form.value.status == 'Discharged') {
-      updatedPatient.dischargeDate = currentDate
+      updatedPatient.dischargeDate = this.getCurrentDate()
+      updatedPatient.personalCode = ''
     }
     this.ps.updatePatient(updatedPatient)
   }
@@ -176,5 +177,22 @@ export class DashPatientsComponent implements OnInit {
 
   resetForm(form: NgForm): void {
     form.resetForm()
+  }
+
+  getCurrentDate(): string {
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0')
+    let mm = String(today.getMonth() + 1).padStart(2, '0')
+    let yyyy = today.getFullYear()
+    return mm + '/' + dd + '/' + yyyy;
+  }
+
+
+  generatePersonalCode(): string {
+    return Math.random().toString(36).substr(2, 9).toLocaleUpperCase()
+  }
+
+  updatePersonalCode(): void {
+    this.selectedPatient.personalCode = this.generatePersonalCode()
   }
 }

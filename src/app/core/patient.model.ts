@@ -9,4 +9,5 @@ export class Patient {
     status?: string
     admissionDate?: string
     dischargeDate?: string
+    personalCode?: string
 }

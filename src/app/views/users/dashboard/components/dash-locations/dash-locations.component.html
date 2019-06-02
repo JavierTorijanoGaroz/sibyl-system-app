@@ -63,16 +63,20 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">UID</th>
+                  <!-- <th scope="col">UID</th> -->
+                  <th scope="col">ID</th>
                   <th scope="col">NAME</th>
+                  <th scope="col">ZONE</th>
                   <th scope="col">OPERATIONS</th>
                 </tr>
               </thead>
               <tbody class="bg-white">
                 <tr *ngFor="let location of locations | locationFilter:searchTerm; let i = index">
                   <td>{{ i+1 }}</td>
-                  <td>{{ location.uid }}</td>
+                  <!-- <td>{{ location.uid }}</td> -->
+                  <td>{{ location.id }}</td>
                   <td>{{ location.name }}</td>
+                  <td>{{ location.zone }}</td>
                   <td>
                     <button type="button" class="btn btn-info btn-sm mr-1" data-toggle="modal"
                       data-target="#updateModal" (click)="selectLocation(location)">
@@ -100,7 +104,7 @@
     <div class="modal-content bg-transparent">
       <form #locationAddForm="ngForm">
         <div class="modal-header bg-primary text-white">
-          <i class="fas fa-user-edit fa-2x ml-1"></i>
+          <i class="fas fa-map-marker-alt fa-2x ml-1"></i>
           <h5 class="modal-title ml-2" id="addLocationModalTitle">Register location</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span class="text-white" aria-hidden="true">&times;</span>
@@ -109,8 +113,22 @@
         <div class="modal-body bg-light">
           <div class="form-row">
             <div class="form-group col-md-12">
+              <label for="id"> ID </label>
+              <input type="text" name="id" class="form-control" [(ngModel)]="id" placeholder="Enter location id...">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
               <label for="name"> Name </label>
-              <input type="text" name="name" class="form-control" [(ngModel)]="name">
+              <input type="text" name="name" class="form-control" [(ngModel)]="name"
+                placeholder="Enter location name...">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="zone"> Zone </label>
+              <input type="text" name="zone" class="form-control" [(ngModel)]="zone"
+                placeholder="Enter location zone...">
             </div>
           </div>
         </div>
@@ -141,8 +159,20 @@
         <div class="modal-body bg-light">
           <div class="form-row">
             <div class="form-group col-md-12">
+              <label for="id"> ID </label>
+              <input type="text" name="id" class="form-control" [(ngModel)]="this.ls.selectedLocation.id">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
               <label for="name"> Name </label>
               <input type="text" name="name" class="form-control" [(ngModel)]="this.ls.selectedLocation.name">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="zone"> Zone </label>
+              <input type="text" name="zone" class="form-control" [(ngModel)]="this.ls.selectedLocation.zone">
             </div>
           </div>
         </div>

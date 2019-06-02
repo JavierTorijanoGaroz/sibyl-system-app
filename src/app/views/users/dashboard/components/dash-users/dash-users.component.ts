@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { UsersService } from 'src/app/core/users.service';
 import { LocationsService } from 'src/app/core/locations.service';
+
 import { User } from 'src/app/core/user.model';
 import { Observable, from } from 'rxjs';
-
 
 type UserFields = 'email' | 'password';
 type FormErrors = { [u in UserFields]: string };

@@ -108,9 +108,9 @@
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content bg-transparent">
       <form #userAddForm="ngForm">
-        <div class="modal-header bg-info text-white">
-          <i class="fas fa-edit fa-2x ml-1"></i>
-          <h5 class="modal-title ml-2" id="updateModalTitle">Update user data</h5>
+        <div class="modal-header bg-primary text-white">
+          <i class="fas fa-user fa-2x ml-1"></i>
+          <h5 class="modal-title ml-2" id="updateModalTitle">Register user</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span class="text-white" aria-hidden="true">&times;</span>
           </button>
@@ -174,7 +174,7 @@
         <div class="modal-footer bg-light">
           <button type="button" class="btn btn-secondary" (click)="resetForm(userAddForm)"
             data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-info" (click)="onCreateUser(userAddForm)"
+          <button type="button" class="btn btn-primary" (click)="onCreateUser(userAddForm)"
             data-dismiss="modal">Register</button>
         </div>
       </form>

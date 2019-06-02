@@ -213,13 +213,13 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="location"> Location </label>
-              <select class="form-control" name="location" [(ngModel)]="this.ps.selectedPatient.location">
+              <select class="custom-select form-control" name="location" [(ngModel)]="this.ps.selectedPatient.location">
                 <option *ngFor="let location of locations">{{ location }}</option>
               </select>
             </div>
             <div class="form-group col-md-6">
               <label for="status"> Status </label>
-              <select class="form-control" name="status" [(ngModel)]="this.ps.selectedPatient.status">
+              <select class="custom-select form-control" name="status" [(ngModel)]="this.ps.selectedPatient.status">
                 <option *ngFor="let status of statuses">{{ status }}</option>
               </select>
             </div>
@@ -234,6 +234,18 @@
               <label for="dischargeDate"> Discharge Date </label>
               <input type="text" name="dischargeDate" class="form-control"
                 [(ngModel)]="this.ps.selectedPatient.dischargeDate" readonly>
+            </div>
+          </div>
+          <hr class="w-100">
+          <div class="form-row mt-4">
+            <div class="form-group col-md-6">
+              <button type="button" class="btn btn-outline-info btn-block" (click)="updatePersonalCode()">
+                <i class="fas fa-qrcode"></i>&nbsp;Generate New Personal Code</button>
+            </div>
+            <div class="form-group col-md-6">
+              <!-- <label for="personalCode"> Personal Code </label> -->
+              <input type="text" name="personalCode" class="form-control"
+                [(ngModel)]="this.ps.selectedPatient.personalCode" readonly>
             </div>
           </div>
         </div>

@@ -16,8 +16,9 @@ export class DashLocationsComponent implements OnInit {
   selectedLocation: Location
 
   searchOptions: any = [
-    { text: 'Uid', value: '0' },
-    { text: 'Name', value: '1' }
+    { text: 'ID', value: '0' },
+    { text: 'Name', value: '1' },
+    { text: 'Zone', value: '2' }
   ]
 
   constructor(private ls: LocationsService) { }
@@ -32,7 +33,9 @@ export class DashLocationsComponent implements OnInit {
   onCreateLocation(form: NgForm): void {
     let newLocation: Location = {
       uid: '',
+      id: form.value.id,
       name: form.value.name,
+      zone: form.value.zone
     }
     this.ls.createLocation(newLocation)
     this.resetForm(form)
@@ -40,14 +43,20 @@ export class DashLocationsComponent implements OnInit {
 
   onReadLocation(form: NgForm): void {
     switch (form.value.searchOption.value) {
-      case "0": { // By uid
-        this.ls.getLocationByUID(form.value.searchField).subscribe(locations => {
+      case "0": { // By id
+        this.ls.getLocationByID(form.value.searchField).subscribe(locations => {
           this.locations = locations
         })
         break;
       }
       case "1": { // By name
         this.ls.getLocationByName(form.value.searchField).subscribe(locations => {
+          this.locations = locations
+        })
+        break;
+      }
+      case "2": { // By zone
+        this.ls.getLocationByZone(form.value.searchField).subscribe(locations => {
           this.locations = locations
         })
         break;
@@ -62,7 +71,9 @@ export class DashLocationsComponent implements OnInit {
   onUpdateLocation(form: NgForm) {
     let updatedLocation: Location = {
       uid: this.selectedLocation.uid,
+      id: form.value.id,
       name: form.value.name,
+      zone: form.value.zone
     }
     this.ls.updateLocation(updatedLocation)
   }
