@@ -140,6 +140,42 @@ export class PatientsService {
   }
 
   /**
+   * Get a patient by Admission Date
+   * 
+   * @param patientAdmissionDateThe patient's admission date
+   */
+  getPatientByAdmissionDate(patientAdmissionDate: string) {
+    this.patientsCollection = this.afs.collection<Patient>('patients', ref => {
+      return ref.where('admissionDate', '==', patientAdmissionDate)
+    })
+    return this.patients = this.patientsCollection.valueChanges()
+  }
+
+  /**
+   * Get a patient by Discharge Date
+   * 
+   * @param patientDischargeDate The patient's discharge date
+   */
+  getPatientByDischargeDate(patientDischargeDate: string) {
+    this.patientsCollection = this.afs.collection<Patient>('patients', ref => {
+      return ref.where('dischargeDate', '==', patientDischargeDate)
+    })
+    return this.patients = this.patientsCollection.valueChanges()
+  }
+
+  /**
+   * Get a patient by Personal Code
+   * 
+   * @param patientPersonalCode The patient's personal code
+   */
+  getPatientByPersonalCode(patientPersonalCode: string) {
+    this.patientsCollection = this.afs.collection<Patient>('patients', ref => {
+      return ref.where('personalCode', '==', patientPersonalCode)
+    })
+    return this.patients = this.patientsCollection.valueChanges()
+  }
+
+  /**
    * Update patient document stored on Firestore
    * 
    * @param patient The patient to update

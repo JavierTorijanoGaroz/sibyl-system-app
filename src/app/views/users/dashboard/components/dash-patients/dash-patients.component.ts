@@ -31,7 +31,10 @@ export class DashPatientsComponent implements OnInit {
     { text: 'Name', value: '3' },
     { text: 'Lastname', value: '4' },
     { text: 'Location', value: '5' },
-    { text: 'Status', value: '6' }
+    { text: 'Status', value: '6' },
+    { text: 'Admission date', value: '7' },
+    { text: 'Discharge date', value: '8' },
+    { text: 'Personal code', value: '9' }
   ]
 
   spinIcon: boolean
@@ -124,6 +127,24 @@ export class DashPatientsComponent implements OnInit {
         })
         break;
       }
+      case "7": { // By admissionDate
+        this.ps.getPatientByAdmissionDate(form.value.searchField).subscribe(patients => {
+          this.patients = patients
+        })
+        break;
+      }
+      case "8": { // By dischargeDate
+        this.ps.getPatientByDischargeDate(form.value.searchField).subscribe(patients => {
+          this.patients = patients
+        })
+        break;
+      }
+      case "9": { // By personalCode
+        this.ps.getPatientByPersonalCode(form.value.searchField).subscribe(patients => {
+          this.patients = patients
+        })
+        break;
+      }
       default: { // Invalid option 
         console.log("Invalid option...") // TODO: Mostrar información al usuario
         break;
@@ -181,7 +202,6 @@ export class DashPatientsComponent implements OnInit {
     let yyyy = today.getFullYear()
     return mm + '/' + dd + '/' + yyyy;
   }
-
 
   generatePersonalCode(): string {
     return Math.random().toString(36).substr(2, 9).toLocaleUpperCase()
