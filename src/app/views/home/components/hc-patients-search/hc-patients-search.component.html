@@ -1,5 +1,5 @@
 <!-- Section - Patients Search -->
-<section class="patients-search text-white text-center">
+<section id="app-finder" class="patients-search text-white text-center">
   <div class="overlay"></div>
   <div class="container">
     <div class="row">
@@ -11,7 +11,7 @@
           <div class="form-row">
             <div class="col-12 col-md-9 mb-2 mb-md-0">
               <input type="text" name="searchField" class="form-control form-control-lg"
-                placeholder="Enter the CIP number..." [(ngModel)]="searchField">
+                placeholder="Enter patient code..." [(ngModel)]="searchField">
             </div>
             <div class="col-12 col-md-3">
               <button type="button" class="btn btn-block btn-lg btn-primary" (click)="onReadPatient(searchForm)"> Find
@@ -22,10 +22,39 @@
       </div>
     </div>
   </div>
-  <!-- TODO: Maquetar vista -->
-  <div *ngIf="flag!==-1" class="container text-center text-white searc">
-    <p *ngIf="flag===0" class="bg-danger">Patient not found.</p>
-    <p *ngIf="flag===1" class="bg-success">The patient {{ patient.name }} has been found.</p>
+  <!-- Search Result -->
+  <div *ngIf="flag!==-1" class="container text-center text-white">
+    <!-- Patient Not Found -->
+    <div *ngIf="flag===0" class="card text-center bg-danger mt-5">
+      <div class="card-header">
+        <em class="fas fa-exclamation-circle fa-2x fa-fw"></em>
+        <h5 class="card-title">Patient Not Found</h5>
+      </div>
+      <div class="card-body bg-light text-dark">
+        <p class="card-text mt-2">The entered code <strong>"{{ code }}"</strong> is not registered in our database.</p>
+        <button type="button" class="btn btn-outline-primary" w-100 (click)="clearResult(searchForm)">
+          <em class="fas fa-eraser"></em>&nbsp;Clear
+        </button>
+      </div>
+      <div class="card-footer">Sibyl System</div>
+    </div>
+    <!-- Patient Found -->
+    <div *ngIf="flag===1" class="card text-center bg-success mt-5">
+      <div class="card-header">
+        <em class="fas fa-check-circle fa-2x fa-fw"></em>
+        <h5 class="card-title">Patient Found</h5>
+      </div>
+      <div class="card-body bg-light text-dark">
+        <em class="fas fa-user-injured fa-4x fa-fw text-success mb-3"></em><br>
+        <strong class="card-text">Patient Code:</strong> {{ patient.personalCode }}<br>
+        <strong class="card-text">Location:</strong> {{ patient.location }}<br>
+        <strong class="card-text">Status:</strong> {{ patient.status }}<br>
+        <button type="button" class="btn btn-outline-primary mt-3" w-100 (click)="clearResult(searchForm)">
+          <em class="fas fa-eraser"></em>&nbsp;Clear
+        </button>
+      </div>
+      <div class="card-footer bg-success">Sibyl System</div>
+    </div>
   </div>
 </section>
 <!-- Section - Patients Search -->
